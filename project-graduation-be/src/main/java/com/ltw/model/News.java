@@ -1,11 +1,14 @@
 package com.ltw.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.Year;
 
 @Getter
 @Setter
@@ -14,27 +17,27 @@ import java.time.LocalDate;
 public class News {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "title")
+    @Size(max = 255)
     private String title;
 
-    @Lob
     @Column(name = "description")
     private String description;
 
-    @Lob
     @Column(name = "file")
     private String file;
 
     @Column(name = "create_at")
-    private Instant createAt;
+    private Timestamp createAt;
 
     @Column(name = "update_at")
-    private Instant updateAt;
+    private Timestamp updateAt;
 
     @Column(name = "year")
-    private LocalDate year;
+    private Year year;
 
     @Column(name = "subject")
     private String subject;
