@@ -1,51 +1,56 @@
-package com.ltw.repository.news;
+package com.ltw.repository.users;
 
 import com.ltw.constant.Constants;
-import com.ltw.model.News;
+import com.ltw.model.User;
 import com.ltw.utils.CriteriaBuilderUtils;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.data.jpa.domain.Specification;
 
-import java.sql.Timestamp;
-import java.time.Year;
-import java.util.ArrayList;
-import java.util.List;
 import jakarta.persistence.criteria.Predicate;
 
-public class CustomNewsQuery {
-    private CustomNewsQuery(){}
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
+public class CustomUserQuery {
+    private CustomUserQuery(){}
     @Data
     @NoArgsConstructor
-    public static class NewsFilterParam{
-        private String keywords;
-        private Long year;
-        private String sortField;
+    public static class UserFilterParam{
+        private  String keywords;
         private String sortType;
-//        private Long startDate;
-//        private Long endDate;
+        private String sortField;
+        private String email;
+        private String phone;
+        private Date startDate;
+        private Date endDate;
     }
 
-    public static Specification<News> getFilterNew(NewsFilterParam param){
-        return (((root, query, criteriaBuilder) -> {
+    public static Specification<User> getFilterUser(UserFilterParam param){
+        return ((((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
             if(!Strings.isEmpty(param.getKeywords())){
                 predicates.add(
                         CriteriaBuilderUtils.createPredicateForSearchInsensitve(root, criteriaBuilder, param.getKeywords(),
-                                "title","description","subject")
+                                "name", "username","address","subject" )
                 );
+
             }
-            if(param.getYear() != null){
-                Year year = Year.of(Math.toIntExact(param.getYear()));
-                predicates.add(criteriaBuilder.equal(root.get("year"), param.getYear()));
+            if(param.email != null){
+                predicates.add(criteriaBuilder.equal(root.get("email"), param.email));
             }
-//            if (param.startDate != null && param.endDate != null) {
+            if(param.phone != null){
+                predicates.add(criteriaBuilder.equal(root.get("phone"), param.phone));
+            }
+            if (param.startDate != null && param.endDate != null) {
 //                Timestamp startDateValue = new Timestamp(param.startDate);
 //                Timestamp endDateValue = new Timestamp(param.endDate);
-//                predicates.add(criteriaBuilder.between(root.get("createdAt"), startDateValue, endDateValue));
-//            }
+                predicates.add(criteriaBuilder.between(root.get("createdAt"), param.startDate, param.endDate));
+            }
             if(param.sortField != null && !param.sortField.equals("")){
                 if(param.sortType.equals(Constants.SortType.DESC) || param.sortType.equals("")){
                     query.orderBy(criteriaBuilder.desc(root.get(param.sortField)));
@@ -57,7 +62,7 @@ public class CustomNewsQuery {
                 query.orderBy(criteriaBuilder.desc(root.get("id")));
             }
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
-        }));
-
+        })));
     }
+
 }

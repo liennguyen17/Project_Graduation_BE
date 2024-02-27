@@ -7,10 +7,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "masterdata", schema = "projectgraduation")
+@Table(name = "masterdata", schema = "db_graduation")
 public class MasterData {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Lob

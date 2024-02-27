@@ -4,15 +4,17 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.security.Timestamp;
 import java.time.Instant;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "topic", schema = "projectgraduation")
+@Table(name = "topic", schema = "db_graduation")
 public class Topic {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -46,9 +48,9 @@ public class Topic {
     private Float boardMembers3;
 
     @Column(name = "create_at")
-    private Instant createAt;
+    private Timestamp createAt;
 
     @Column(name = "update_at")
-    private Instant updateAt;
+    private Timestamp updateAt;
 
 }

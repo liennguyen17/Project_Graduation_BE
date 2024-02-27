@@ -13,7 +13,7 @@ import java.time.Year;
 @Getter
 @Setter
 @Entity
-@Table(name = "news", schema = "projectgraduation")
+@Table(name = "news", schema = "db_graduation")
 public class News {
     @Id
     @Column(name = "id", nullable = false)

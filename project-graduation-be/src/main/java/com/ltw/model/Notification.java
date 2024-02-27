@@ -4,15 +4,17 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.security.Timestamp;
 import java.time.Instant;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "notification", schema = "projectgraduation")
+@Table(name = "notification", schema = "db_graduation")
 public class Notification {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -22,22 +24,19 @@ public class Notification {
     @Column(name = "title")
     private String title;
 
-    @Lob
     @Column(name = "description")
     private String description;
 
-    @Lob
     @Column(name = "file")
     private String file;
 
-    @Lob
     @Column(name = "is_read")
     private String isRead;
 
     @Column(name = "update_at")
-    private Instant updateAt;
+    private Timestamp updateAt;
 
     @Column(name = "create_at")
-    private Instant createAt;
+    private Timestamp createAt;
 
 }

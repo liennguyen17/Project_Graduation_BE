@@ -1,21 +1,20 @@
 package com.ltw.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.security.Timestamp;
 import java.time.Instant;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "role", schema = "projectgraduation")
+@Table(name = "role", schema = "db_graduation")
 public class Role {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "name")
@@ -25,9 +24,9 @@ public class Role {
     private String description;
 
     @Column(name = "create_at")
-    private Instant createAt;
+    private Timestamp createAt;
 
     @Column(name = "update_at")
-    private Instant updateAt;
+    private Timestamp updateAt;
 
 }

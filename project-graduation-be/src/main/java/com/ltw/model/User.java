@@ -1,35 +1,39 @@
 package com.ltw.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
+import lombok.*;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
-
-@Getter
-@Setter
+import java.util.Date;
 @Entity
-@Table(name = "user", schema = "projectgraduation")
+@Table(name = "user", schema = "db_graduation")
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "name")
+    @Size(max = 100)
     private String name;
 
-    @Column(name = "username")
+    @Column(name = "username", unique = true, nullable = false, length = 100)
     private String username;
 
     @Column(name = "password")
+    @Size(max = 100)
     private String password;
 
     @Column(name = "dob")
-    private LocalDate dob;
+    private Date dob;
 
     @Column(name = "address")
     private String address;
@@ -44,12 +48,13 @@ public class User {
     private String subject;
 
     @Column(name = "create_at")
-    private Instant createAt;
+    private Timestamp createAt;
 
     @Column(name = "update_at")
-    private Instant updateAt;
+    private Timestamp updateAt;
 
-    @Column(name = "role_id", nullable = false)
+//    @Column(name = "role_id", nullable = false)
+    @Column(name = "role_id")
     private Integer roleId;
 
 }

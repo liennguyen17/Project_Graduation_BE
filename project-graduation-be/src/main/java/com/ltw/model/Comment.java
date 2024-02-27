@@ -4,15 +4,17 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.security.Timestamp;
 import java.time.Instant;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "comment", schema = "projectgraduation")
+@Table(name = "comment", schema = "db_graduation")
 public class Comment {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "message")
@@ -27,7 +29,7 @@ public class Comment {
     private String file;
 
     @Column(name = "create_at")
-    private Instant createAt;
+    private Timestamp createAt;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "Topic_id", nullable = false)
