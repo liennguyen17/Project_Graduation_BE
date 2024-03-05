@@ -11,21 +11,18 @@ import java.util.Date;
 
 @Mapper(componentModel = "spring")
 public interface UserUpdateMapper {
-    @Named("convertDateFromString")
-    default Date converDateFromString(String dateStr) throws ParseException {
-        return DateUtils.convertDateFromString(dateStr, Constants.DateTimeFormatConstant.DATE_FORMAT);
-    }
+//    @Named("convertDateFromString")
+//    default Date converDateFromString(String dateStr) throws ParseException {
+//        return DateUtils.convertDateFromString(dateStr, Constants.DateTimeFormatConstant.DATE_FORMAT);
+//    }
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mappings({
-            @Mapping(target = "dob", source = "dob",
-dateFormat = "dd/MM/yyyy"
-//                    qualifiedByName = "convertDateFromString"
-            ),
-            @Mapping(target = "roleId", ignore = true),
-            @Mapping(target = "createAt",ignore = true),
-            @Mapping(target = "updateAt",ignore = true),
-            @Mapping(target = "password",ignore = true)
-    })
+            @Mapping(target = "dob", source = "dob", dateFormat = "dd/MM/yyyy"),
+//            @Mapping(target = "roleId", ignore = true),
+            @Mapping(target = "createAt", ignore = true),
+            @Mapping(target = "updateAt", ignore = true),
+//            @Mapping(target = "password", ignore = true)
+            })
     void updateUserFromDto(UserUpdateValueDto dto, @MappingTarget User entity);
 }

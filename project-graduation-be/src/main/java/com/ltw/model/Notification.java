@@ -4,8 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.security.Timestamp;
-import java.time.Instant;
+import java.sql.Timestamp;
 
 @Getter
 @Setter
@@ -18,7 +17,7 @@ public class Notification {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "User_id", nullable = false)
+    @JoinColumn(name = "User_id")
     private User user;
 
     @Column(name = "title")

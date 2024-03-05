@@ -10,8 +10,6 @@ public class NewUpdateValueDto {
     private String title;
     private String description;
     private String file;
-//    private Timestamp createAt;
-//    private Timestamp updateAt;
     private Year year;
     private String subject;
 }

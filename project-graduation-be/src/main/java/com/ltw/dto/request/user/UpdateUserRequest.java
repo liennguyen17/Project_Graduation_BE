@@ -1,5 +1,6 @@
 package com.ltw.dto.request.user;
 
+import com.ltw.constant.Constants;
 import com.ltw.domain.validator.date.DateAnnotation;
 import com.ltw.domain.validator.email.EmailAnnotation;
 import com.ltw.domain.validator.name.NameAnnotation;
@@ -14,32 +15,28 @@ import java.util.Date;
 
 @Data
 public class UpdateUserRequest {
-    @NotNull
+    @NotNull(message = Constants.ErrorMessageUserValidation.ID_NOT_NULL)
     private Integer id;
-    @NotBlank(message = "Tên nguời dùng không được để trống!")
-    @Size(min = 6, max = 100, message = "Tên người dùng phải có ít nhất 6, nhiều nhất 100 kí tự!")
+    @NotBlank(message = Constants.ErrorMessageUserValidation.NAME_NOT_BLANK)
+    @Size(min = 6, max = 100, message = Constants.ErrorMessageUserValidation.NAME_SIZE)
     @NameAnnotation
     private String name;
-    @NotBlank(message = "User name nguời dùng không được để trống!")
-    @Size(min = 6, max = 100, message = "User name người dùng phải có ít nhất 6, nhiều nhất 100 kí tự!")
+    @NotBlank(message = Constants.ErrorMessageUserValidation.USERNAME_NOT_BLANK)
+    @Size(min = 6, max = 100, message = Constants.ErrorMessageUserValidation.USERNAME_SIZE)
     @UsernameAnnotation
     private String username;
-//    @NotBlank(message = "Mật khẩu không được để trống!")
-//    @Size(min = 6, message = "Mật khẩu phải có ít nhất 6 ký tự!")
-//    @PasswordAnnotation
-//    private String password;
-    @NotBlank(message = "Ngày sinh không được để trống!")
+    @NotBlank(message = Constants.ErrorMessageUserValidation.DOB_NOT_BLANK)
     @DateAnnotation
     private String dob;
-    @NotBlank(message = "Địa chỉ không được để trống!")
+    @NotBlank(message = Constants.ErrorMessageUserValidation.ADDRESS_NOT_BLANK)
     private String address;
-    @NotBlank(message = "Email không được để trống!")
+    @NotBlank(message = Constants.ErrorMessageUserValidation.EMAIL_NOT_BLANK)
     @EmailAnnotation
     private String email;
-    @NotBlank(message = "Số điện thoại không được để trống!")
+    @NotBlank(message = Constants.ErrorMessageUserValidation.PHONE_NOT_BLANK)
     private String phone;
-    @NotBlank(message = "Bộ môn không được để trống!")
+    @NotBlank(message = Constants.ErrorMessageUserValidation.SUBJECT_NOT_BLANK)
     private String subject;
-    //    @NotNull(message = "Vai trò không được để trống!")
+    //    @NotNull(message = Constants.ErrorMessageUserValidation.ROLE_NOT_BLANK)
     private Integer roleId;
 }

@@ -36,7 +36,7 @@ public class CustomUserQuery {
             if(!Strings.isEmpty(param.getKeywords())){
                 predicates.add(
                         CriteriaBuilderUtils.createPredicateForSearchInsensitve(root, criteriaBuilder, param.getKeywords(),
-                                "name", "username","address","subject" )
+                                "name", "username","address","subject","role" )
                 );
 
             }

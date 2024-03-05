@@ -2,6 +2,7 @@ package com.ltw.dto.entity.users;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ltw.constant.Constants;
+import com.ltw.dto.entity.role.RoleDTO;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -22,5 +23,6 @@ public class UserDTO {
     private Timestamp createAt;
     @JsonFormat(pattern = Constants.DateTimeFormatConstant.DATE_FORMAT, timezone = Constants.DateTimeFormatConstant.TIME_ZONE)
     private Timestamp updateAt;
-    private Integer roleId;
+//    private RoleDTO roleId;
+    private String role;
 }

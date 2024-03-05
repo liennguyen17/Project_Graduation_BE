@@ -36,14 +36,23 @@ public class UsersController {
 
     @PutMapping
     public BaseItemResponse<UserDTO> updateUser(@Valid @RequestBody UpdateUserRequest request){
-        return BaseItemResponse.successData(userService.updateUser(request));
+        return BaseResponse.successData(userService.updateUser(request));
     }
 
-    @DeleteMapping
-    public BaseResponse deleteUsers(@Valid @RequestBody DeleteUsersRequest request){
+    @DeleteMapping()
+    public BaseResponse deleteUsers1(@Valid @RequestBody DeleteUsersRequest request) {
         List<ErrorDetail> errorDetailList = userService.deleteUsers(request);
+        if (errorDetailList == null) {
+            return BaseResponse.successData("Xóa người dùng thành công");
+        }
         return BaseResponse.error(ErrorCodeDefs.ERR_VALIDATION, ErrorCodeDefs.getMessage(ErrorCodeDefs.ERR_VALIDATION), errorDetailList);
     }
+//    @DeleteMapping
+//    public BaseListResponse<UserDTO> deleteUsers(@RequestBody @Valid DeleteUsersRequest request) {
+//        List<UserDTO> userDTOS = userService.deleteUsers(request);
+//        return BaseListResponse.successListData(userDTOS, userDTOS.size());
+//
+//    }
 
     @GetMapping("{id}")
     public BaseItemResponse<UserDTO> getUserById(@PathVariable("id") Integer id){
@@ -51,7 +60,7 @@ public class UsersController {
     }
 
     @PostMapping("/filter")
-    public BaseListResponse<UserDTO> filter(@Valid @RequestBody GetUserRequest request){
+    public BaseListResponse<UserDTO> filterUser(@Valid @RequestBody GetUserRequest request) {
         Page<User> userPage = userService.getUserByParam(request, PageRequest.of(request.getStart(), request.getLimit()));
         return BaseResponse.successListData(userPage.getContent().stream()
                 .map(e -> modelMapper.map(e,UserDTO.class)).collect(Collectors.toList()), (int)userPage.getTotalElements());

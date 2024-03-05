@@ -14,5 +14,5 @@ public class UserUpdateValueDto {
     private String email;
     private String phone;
     private String subject;
-    private Integer roleId;
+    private String role;
 }

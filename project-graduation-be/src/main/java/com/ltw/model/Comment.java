@@ -1,11 +1,11 @@
 package com.ltw.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.security.Timestamp;
-import java.time.Instant;
+import java.sql.Timestamp;
 
 @Getter
 @Setter
@@ -18,21 +18,21 @@ public class Comment {
     private Integer id;
 
     @Column(name = "message")
+    @Size(max = 5000)
     private String message;
 
-    @Lob
     @Column(name = "create_by")
     private String createBy;
 
-    @Lob
     @Column(name = "file")
     private String file;
 
     @Column(name = "create_at")
     private Timestamp createAt;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "Topic_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "Topic_id")
+//    @JoinColumn(name = "Topic_id", nullable = false)
     private Topic topic;
 
 }

@@ -47,7 +47,7 @@ public class NewService {
             news.setUpdateAt(new Timestamp(System.currentTimeMillis()));
             return modelMapper.map(newsRepository.saveAndFlush(news), NewDTO.class);
         }catch (Exception ex){
-            log.info("ex: {}", ex);
+            log.info("loi : {}", ex);
             throw new DataNotFoundException("Quá trình tạo tin tức không thành công!");
         }
     }
@@ -73,7 +73,8 @@ public class NewService {
             if(!isExist) {
                 ErrorDetail errorDetail = new ErrorDetail();
                 errorDetail.setId(requestId.toString());
-                errorDetail.setId(Constants.ErrorMessageNewsValidation.NOT_FIND_NEW_BY_ID + requestId);
+                errorDetail.setMessage(Constants.ErrorMessageNewsValidation.NOT_FIND_NEW_BY_ID + requestId);
+                errorDetails.add(errorDetail);
             }
         }
 

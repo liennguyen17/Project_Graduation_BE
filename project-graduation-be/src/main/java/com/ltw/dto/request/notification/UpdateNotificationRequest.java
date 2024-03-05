@@ -1,5 +1,6 @@
 package com.ltw.dto.request.notification;
 
+import com.ltw.constant.Constants;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -7,12 +8,11 @@ import lombok.Data;
 
 @Data
 public class UpdateNotificationRequest {
-    @NotNull
+    @NotNull(message = Constants.ErrorMessageNotificationValidation.ID_NOT_NULL)
     private Integer id;
-    @NotBlank(message = "Tiêu đề thông báo không được để trống!")
-    @Size(min = 6, max = 255, message = "Tiêu đề thông báo phải có ít nhất 6, nhiều nhất 255 kí tự!")
+    @Size(min = 6, max = 255, message = Constants.ErrorMessageNotificationValidation.TITLE_SIZE)
     private String title;
-    @NotBlank(message = "Nội dung không được để trống!")
+    @NotBlank(message = Constants.ErrorMessageNotificationValidation.DESCRIPTION_NOT_BLANK)
     private String description;
     private String file;
     private String isRead;

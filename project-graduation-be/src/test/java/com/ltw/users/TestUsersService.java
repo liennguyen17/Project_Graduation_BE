@@ -14,19 +14,24 @@ public class TestUsersService {
     @Autowired
     private UserService userService;
 
-//    @Test
-//    public void testCreateUser(){
-//        CreateUserRequest request = new CreateUserRequest();
-//        request.setName("Nguyen Ngoc Nam");
-//        request.setEmail("nguyenNam@gmail.com");
-//        request.setUsername("ngocnam02");
-//        request.setDob("22/12/2009");
-//        request.setSubject("cong nghe thong tin");
-//        request.setAddress("BAC NINH");
-//        request.setPhone("0988877650");
-//        request.setPassword("123456@a");
-////        request.setRoleId();
-//        UserDTO userDTO = userService.createUser(request);
-//        log.info("Create user success: {}", userDTO);
-//    }
+    @Test
+    public void testCreateUser() {
+        try {
+            CreateUserRequest request = new CreateUserRequest();
+            request.setName("Nguyen Ngoc Nam");
+            request.setEmail("nguyenNam@gmail.com");
+            request.setUsername("ngocnam02");
+            request.setDob("22/12/2009");
+            request.setSubject("cong nghe thong tin");
+            request.setAddress("BAC NINH");
+            request.setPhone("0988877650");
+            request.setPassword("123456@a");
+            request.setRoleId(1);
+            UserDTO userDTO = userService.createUser(request);
+            log.info("Create user success: {}", userDTO);
+        } catch (Exception ex) {
+
+            log.error("Loi tao usser: {}", ex.getMessage());
+        }
+    }
 }

@@ -4,8 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.security.Timestamp;
-import java.time.Instant;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -53,4 +54,6 @@ public class Topic {
     @Column(name = "update_at")
     private Timestamp updateAt;
 
+    @OneToMany(mappedBy = "topic")
+    private List<Comment> comments = new ArrayList<>();
 }

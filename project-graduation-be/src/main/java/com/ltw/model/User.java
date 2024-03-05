@@ -5,8 +5,6 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.sql.Timestamp;
-import java.time.Instant;
-import java.time.LocalDate;
 import java.util.Date;
 @Entity
 @Table(name = "user", schema = "db_graduation")
@@ -53,8 +51,12 @@ public class User {
     @Column(name = "update_at")
     private Timestamp updateAt;
 
-//    @Column(name = "role_id", nullable = false)
-    @Column(name = "role_id")
-    private Integer roleId;
+    @Column(name = "role")
+    private String role;
+
+//        @ManyToOne(fetch = FetchType.LAZY, optional = false)
+//    @ManyToOne
+//    @JoinColumn(name = "role_id")
+//    private Role roleId;
 
 }

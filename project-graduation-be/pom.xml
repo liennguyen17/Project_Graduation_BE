@@ -67,6 +67,17 @@
 			<artifactId>lombok-mapstruct-binding</artifactId>
 			<version>${lombok.mapstruct.binding.version}</version>
 		</dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.firebase/firebase-admin -->
+        <dependency>
+            <groupId>com.google.firebase</groupId>
+            <artifactId>firebase-admin</artifactId>
+            <version>9.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>32.0.1-jre</version>
+        </dependency>
 	</dependencies>
 
 	<build>

@@ -1,14 +1,16 @@
 package com.ltw.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.security.Timestamp;
-import java.time.Instant;
+import java.util.Collection;
+import java.util.Set;
 
-@Getter
-@Setter
+@Data
+//@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "role", schema = "db_graduation")
 public class Role {
@@ -28,5 +30,19 @@ public class Role {
 
     @Column(name = "update_at")
     private Timestamp updateAt;
+//    @OneToMany(mappedBy = "roleId")
+//    private Set<User> user;
+
+//    @OneToMany(mappedBy = "roleId")
+//    private Set<User> users;
+//    //
+//    @ManyToMany
+//    @JoinTable(
+//            name = "role_permission",
+//            joinColumns = @JoinColumn(
+//                    name = "role_id", referencedColumnName = "role_id"),
+//            inverseJoinColumns = @JoinColumn(
+//                    name = "permission_id", referencedColumnName = "permission_id"))
+//    private Collection<Permission> permissions;
 
 }

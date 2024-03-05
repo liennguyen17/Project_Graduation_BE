@@ -14,15 +14,12 @@ public class MasterData {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Lob
     @Column(name = "type")
     private String type;
 
-    @Lob
     @Column(name = "code")
     private String code;
 
-    @Lob
     @Column(name = "name")
     private String name;
 

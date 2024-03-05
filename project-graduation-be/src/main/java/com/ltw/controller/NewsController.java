@@ -39,6 +39,9 @@ public class NewsController {
     @DeleteMapping
     public BaseResponse deleteNews(@Valid @RequestBody DeleteNewsRequest request){
         List<ErrorDetail> errorDetails = newService.deleteNews(request);
+        if (errorDetails == null) {
+            return BaseResponse.successData("Xóa tin tức thành công");
+        }
         return BaseResponse.error(ErrorCodeDefs.ERR_VALIDATION,
                 ErrorCodeDefs.getMessage(ErrorCodeDefs.ERR_VALIDATION), errorDetails);
     }
