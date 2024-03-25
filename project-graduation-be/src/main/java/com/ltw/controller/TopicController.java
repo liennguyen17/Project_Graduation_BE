@@ -3,10 +3,8 @@ package com.ltw.controller;
 import com.ltw.constant.ErrorCodeDefs;
 import com.ltw.dto.entity.notification.NotificationDTO;
 import com.ltw.dto.entity.topic.TopicDTO;
-import com.ltw.dto.request.topic.CreateTopicRequest;
-import com.ltw.dto.request.topic.DeleteTopicRequest;
-import com.ltw.dto.request.topic.GetTopicRequest;
-import com.ltw.dto.request.topic.UpdateTopicRequest;
+import com.ltw.dto.entity.topic.TopicDTO1;
+import com.ltw.dto.request.topic.*;
 import com.ltw.dto.response.BaseItemResponse;
 import com.ltw.dto.response.BaseListResponse;
 import com.ltw.dto.response.BaseResponse;
@@ -18,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,20 +30,23 @@ public class TopicController {
     private final ModelMapper modelMapper;
 
     @PostMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGE','TEACHER','STUDENT')")
     public BaseItemResponse<TopicDTO> createTopic(@Valid @RequestBody CreateTopicRequest request) {
         return BaseResponse.successData(topicService.createTopic(request));
     }
 
     @PutMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGE','TEACHER')")
     public BaseItemResponse<TopicDTO> updateTopic(@Valid @RequestBody UpdateTopicRequest request) {
         return BaseResponse.successData(topicService.updateTopic(request));
     }
 
     @DeleteMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGE','TEACHER')")
     public BaseResponse deleteNotification(@Valid @RequestBody DeleteTopicRequest request) {
         List<ErrorDetail> errorDetailList = topicService.deleteTopics(request);
         if (errorDetailList == null) {
-            return BaseResponse.successData("Xóa thông báo thành công");
+            return BaseResponse.successData("Xóa đề tài thành công");
         }
         return BaseResponse.error(ErrorCodeDefs.ERR_VALIDATION, ErrorCodeDefs.getMessage(ErrorCodeDefs.ERR_VALIDATION), errorDetailList);
     }
@@ -58,5 +60,10 @@ public class TopicController {
     public BaseListResponse<TopicDTO> filterTopic(@Valid @RequestBody GetTopicRequest request) {
         Page<Topic> topicPage = topicService.getTopicByParam(request, PageRequest.of(request.getStart(), request.getLimit()));
         return BaseResponse.successListData(topicPage.getContent().stream().map(e -> modelMapper.map(e, TopicDTO.class)).collect(Collectors.toList()), (int) topicPage.getTotalElements());
+    }
+
+    @PostMapping("/student")
+    public  BaseItemResponse<TopicDTO1> studentCreateTopic(@Valid @RequestBody StudentCreateTopicRequest request){
+        return BaseResponse.successData(topicService.studentCreateTopic(request));
     }
 }

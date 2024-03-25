@@ -17,9 +17,11 @@ public class UpdateNewsRequest {
     private String title;
     @NotBlank(message = Constants.ErrorMessageNewsValidation.DESCRIPTION_NOT_BLANK)
     private String description;
-    private String file;
     @NotNull(message = Constants.ErrorMessageNewsValidation.YEAR_NOT_NULL)
     private Year year;
     @NotBlank(message = Constants.ErrorMessageNewsValidation.SUBJECT_NOT_BLANK)
     private String subject;
+    private String content;
+    private String image;
+    private String file;
 }

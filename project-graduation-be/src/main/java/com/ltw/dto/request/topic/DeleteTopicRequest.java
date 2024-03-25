@@ -9,4 +9,5 @@ import java.util.List;
 public class DeleteTopicRequest {
     @NotEmpty(message = "Vui lòng truyền id thông báo cần xóa!")
     private List<Integer> ids;
+
 }

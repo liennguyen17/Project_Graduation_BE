@@ -20,6 +20,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,6 +34,7 @@ public class MasterDataController {
     private final ModelMapper modelMapper;
 
     @PostMapping
+//    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public BaseItemResponse<MasterDataDTO> createMasterData(@Valid @RequestBody CreateMasterDataRequest request){
         return BaseResponse.successData(masterDataService.createMasterData(request));
     }

@@ -34,18 +34,13 @@ public class CustomNewsQuery {
             if(!Strings.isEmpty(param.getKeywords())){
                 predicates.add(
                         CriteriaBuilderUtils.createPredicateForSearchInsensitve(root, criteriaBuilder, param.getKeywords(),
-                                "title","description","subject")
+                                "title","description","subject","content")
                 );
             }
             if(param.getYear() != null){
                 Year year = Year.of(Math.toIntExact(param.getYear()));
                 predicates.add(criteriaBuilder.equal(root.get("year"), param.getYear()));
             }
-//            if (param.startDate != null && param.endDate != null) {
-//                Timestamp startDateValue = new Timestamp(param.startDate);
-//                Timestamp endDateValue = new Timestamp(param.endDate);
-//                predicates.add(criteriaBuilder.between(root.get("createdAt"), startDateValue, endDateValue));
-//            }
             if(param.sortField != null && !param.sortField.equals("")){
                 if(param.sortType.equals(Constants.SortType.DESC) || param.sortType.equals("")){
                     query.orderBy(criteriaBuilder.desc(root.get(param.sortField)));

@@ -28,10 +28,23 @@ public class Topic {
 
     @Column(name = "name_topic")
     private String nameTopic;
+    @Column(name = "semester")
+    private String semester;
 
-    @Lob
     @Column(name = "status")
     private String status;
+
+    @Column(name = "name_internship_facility")
+    private String nameInternshipFacility;
+
+    @Column(name = "menter_internship_facility")
+    private String menterInternshipFacility;
+
+    @Column(name = "phone_instructor_internship_facility")
+    private String phoneInstructorInternshipFacility;
+
+    @Column(name = "department_management")
+    private String departmentManagement;
 
     @Column(name = "instructor")
     private Float instructor;

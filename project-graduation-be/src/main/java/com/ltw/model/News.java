@@ -41,5 +41,9 @@ public class News {
 
     @Column(name = "subject")
     private String subject;
+    @Column(name = "image")
+    private String image;
+    @Column(name = "content")
+    private String content;
 
 }

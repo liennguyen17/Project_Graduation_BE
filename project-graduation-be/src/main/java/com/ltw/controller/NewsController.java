@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,16 +28,19 @@ public class NewsController {
     private final ModelMapper modelMapper;
 
     @PostMapping("")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGE')")
     public BaseItemResponse<NewDTO> createNew(@Valid @RequestBody CreateNewsRequest request){
         return BaseResponse.successData(newService.createNew(request));
     }
 
     @PutMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGE')")
     public BaseItemResponse<NewDTO> updateNew(@Valid @RequestBody UpdateNewsRequest request){
         return BaseResponse.successData(newService.updateNew(request));
     }
 
     @DeleteMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGE')")
     public BaseResponse deleteNews(@Valid @RequestBody DeleteNewsRequest request){
         List<ErrorDetail> errorDetails = newService.deleteNews(request);
         if (errorDetails == null) {
@@ -60,11 +64,18 @@ public class NewsController {
 
     //tim kiem
     @PostMapping("/filter")
+//    @GetMapping("/filter")
     public BaseListResponse<NewDTO> filterNews(@Valid @RequestBody GetNewRequest request){
         Page<News> newsPage = newService.getNewByParam(request, PageRequest.of(request.getStart(), request.getLimit()));
         return BaseResponse.successListData(newsPage.getContent().stream()
                 .map(e->modelMapper.map(e, NewDTO.class))
                 .collect(Collectors.toList()), (int)newsPage.getTotalElements());
+    }
+
+    @GetMapping("/all")
+    public BaseListResponse<NewDTO> getAllNews(){
+        List<NewDTO> response = newService.getAllNews();
+        return BaseResponse.successListData(response, response.size());
     }
 
 }

@@ -10,6 +10,7 @@ import org.apache.logging.log4j.util.Strings;
 import org.springframework.data.jpa.domain.Specification;
 
 import jakarta.persistence.criteria.Predicate;
+import org.springframework.util.StringUtils;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -26,6 +27,13 @@ public class CustomUserQuery {
         private String sortField;
         private String email;
         private String phone;
+        private String role;
+        private String userCode;
+        private String className;
+        private String name;
+        private String username;
+        private String subject;
+        private String address;
         private Date startDate;
         private Date endDate;
     }
@@ -36,21 +44,42 @@ public class CustomUserQuery {
             if(!Strings.isEmpty(param.getKeywords())){
                 predicates.add(
                         CriteriaBuilderUtils.createPredicateForSearchInsensitve(root, criteriaBuilder, param.getKeywords(),
-                                "name", "username","address","subject","role" )
+                                "name", "username","address","subject","role","userCode","className" )
                 );
 
             }
-            if(param.email != null){
+            if(StringUtils.hasText(param.getAddress())){
+                predicates.add(criteriaBuilder.like(root.get("address"), "%" + param.getAddress() + "%"));
+            }
+            if(StringUtils.hasText(param.subject)){
+                predicates.add(criteriaBuilder.like(root.get("subject"), "%" + param.getSubject() + "%"));
+            }
+            if(StringUtils.hasText(param.getEmail())){
                 predicates.add(criteriaBuilder.equal(root.get("email"), param.email));
             }
-            if(param.phone != null){
+            if(StringUtils.hasText(param.getPhone())){
                 predicates.add(criteriaBuilder.equal(root.get("phone"), param.phone));
             }
-            if (param.startDate != null && param.endDate != null) {
-//                Timestamp startDateValue = new Timestamp(param.startDate);
-//                Timestamp endDateValue = new Timestamp(param.endDate);
-                predicates.add(criteriaBuilder.between(root.get("createdAt"), param.startDate, param.endDate));
+            if(StringUtils.hasText(param.getRole())){
+                predicates.add(criteriaBuilder.equal(root.get("role"), param.role));
             }
+            if(StringUtils.hasText(param.getUserCode())){
+                predicates.add(criteriaBuilder.equal(root.get("userCode"), param.userCode));
+            }
+            if(StringUtils.hasText(param.getClassName())){
+                predicates.add(criteriaBuilder.equal(root.get("className"), param.className));
+            }
+            if(StringUtils.hasText(param.getName())){
+                predicates.add(criteriaBuilder.like(root.get("name"), "%" + param.getName() + "%"));
+            }
+            if(StringUtils.hasText(param.getUsername())){
+                predicates.add(criteriaBuilder.like(root.get("username"), "%" + param.getUsername() + "%"));
+            }
+//            if (param.startDate != null && param.endDate != null) {
+////                Timestamp startDateValue = new Timestamp(param.startDate);
+////                Timestamp endDateValue = new Timestamp(param.endDate);
+//                predicates.add(criteriaBuilder.between(root.get("updateAt"), param.startDate, param.endDate));
+//            }
             if(param.sortField != null && !param.sortField.equals("")){
                 if(param.sortType.equals(Constants.SortType.DESC) || param.sortType.equals("")){
                     query.orderBy(criteriaBuilder.desc(root.get(param.sortField)));

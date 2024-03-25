@@ -8,6 +8,7 @@ import com.ltw.service.CommentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ public class CommentController {
     private final ModelMapper modelMapper;
 
     @PostMapping
+    @PreAuthorize("hasAnyAuthority('TEACHER')")
     public BaseItemResponse<CommentDTO> createComment(@Valid @RequestBody CreateCommentRequest request) {
         return BaseResponse.successData(commentService.createComment(request));
     }

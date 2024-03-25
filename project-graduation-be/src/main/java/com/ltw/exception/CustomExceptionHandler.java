@@ -4,9 +4,12 @@ import com.ltw.constant.ErrorCodeDefs;
 import com.ltw.dto.response.BaseResponse;
 import com.ltw.dto.response.ErrorDetail;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.websocket.AuthenticationException;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -83,4 +86,44 @@ public class CustomExceptionHandler {
                 ErrorCodeDefs.getMessage(ErrorCodeDefs.ERR_VALIDATION),
                 ex.getErrorDetails());
     }
+
+
+
+    @ResponseStatus(OK)
+    @ResponseBody
+    @ExceptionHandler(value = {JwtTokenInvalid.class})
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    public BaseResponse handleJwtExpired(Exception ex){
+        return BaseResponse.error(ErrorCodeDefs.ERR_HEADER_TOKEN_REQUIRED, ex.getMessage());
+    }
+
+    @ResponseStatus(OK)
+    @ResponseBody
+    @ExceptionHandler(value = {AuthenticationException.class})
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    public BaseResponse handleAuthenticationException(Exception ex){
+        return BaseResponse.error(ErrorCodeDefs.ERR_HEADER_TOKEN_REQUIRED, ex.getMessage());
+    }
+
+    @ResponseStatus(OK)
+    @ResponseBody
+    @ExceptionHandler(value = {java.nio.file.AccessDeniedException.class, AccessDeniedException.class})
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    public BaseResponse accessDeniedException(Exception ex){
+        return BaseResponse.error(ErrorCodeDefs.ERR_PERMISSION_INVALID, ErrorCodeDefs.getMessage(ErrorCodeDefs.ERR_PERMISSION_INVALID));
+    }
+
+    public BaseResponse processFieldErrors(List<FieldError> fieldErrors){
+        List<ErrorDetail> errorDetails = new ArrayList<>();
+        for(FieldError fieldError :  fieldErrors){
+            ErrorDetail errorDetail = ErrorDetail.builder()
+                    .id(fieldError.getField())
+                    .message(fieldError.getDefaultMessage())
+                    .build();
+            errorDetails.add(errorDetail);
+        }
+        return BaseResponse.error(ErrorCodeDefs.ERR_VALIDATION, ErrorCodeDefs.getMessage(ErrorCodeDefs.ERR_VALIDATION), errorDetails);
+    }
+
+
 }

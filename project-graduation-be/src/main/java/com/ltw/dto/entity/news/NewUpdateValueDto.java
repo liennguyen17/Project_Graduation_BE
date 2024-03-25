@@ -12,4 +12,6 @@ public class NewUpdateValueDto {
     private String file;
     private Year year;
     private String subject;
+    private String content;
+    private String image;
 }

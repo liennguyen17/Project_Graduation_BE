@@ -10,6 +10,7 @@ import com.ltw.dto.request.notification.UpdateNotificationRequest;
 import com.ltw.dto.response.ErrorDetail;
 import com.ltw.exception.DataNotFoundException;
 import com.ltw.model.Notification;
+import com.ltw.model.User;
 import com.ltw.repository.notification.CustomNotificationQuery;
 import com.ltw.repository.notification.NotificationRepository;
 import com.ltw.service.mapper.NotificationUpdateMapper;
@@ -33,14 +34,21 @@ public class NotificationService {
     private final NotificationRepository notificationRepository;
     private final ModelMapper modelMapper;
     private final NotificationUpdateMapper notificationUpdateMapper;
+    private final UserService userService;
 
     public NotificationDTO createNotification(CreateNotificationRequest request) {
         try {
+            Optional<User> userOptional = userService.getCurrentUser();
+            if(userOptional.isEmpty()){
+                throw new DataNotFoundException("Không tìm thấy thông tin người dùng tạo thông báo");
+            }
+            User user = userOptional.get();
             Notification notification = modelMapper.map(request, Notification.class);
             notification.setTitle(request.getTitle());
             notification.setDescription(request.getDescription());
             notification.setFile(request.getFile());
             notification.setIsRead(request.getIsRead());
+            notification.setUser(user);
             notification.setCreateAt(new Timestamp(System.currentTimeMillis()));
             notification.setUpdateAt(new Timestamp(System.currentTimeMillis()));
             return modelMapper.map(notificationRepository.saveAndFlush(notification), NotificationDTO.class);

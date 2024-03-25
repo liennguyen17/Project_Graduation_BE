@@ -1,5 +1,6 @@
 package com.ltw.domain.validator.password;
 
+import com.ltw.constant.Constants;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
@@ -15,7 +16,7 @@ import static java.lang.annotation.ElementType.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = PasswordValidator.class)
 public @interface PasswordAnnotation {
-    String message() default "Mật khẩu không hợp lệ, mật khẩu phải chứa 1 ký tự viết hoa, viết thường, chữ số, 1 ký tự đặc biệt!";
+    String message() default Constants.ErrorMessageUserValidation.PASSWORD_ERROR;
 
     Class<?>[] groups() default {};
 

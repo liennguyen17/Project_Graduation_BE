@@ -19,10 +19,14 @@ public class UserDTO {
     private String email;
     private String phone;
     private String subject;
+//    private RoleDTO roleId;
+    private String role;
+    private String userCode;
+    private String className;
     @JsonFormat(pattern = Constants.DateTimeFormatConstant.DATE_FORMAT, timezone = Constants.DateTimeFormatConstant.TIME_ZONE)
     private Timestamp createAt;
     @JsonFormat(pattern = Constants.DateTimeFormatConstant.DATE_FORMAT, timezone = Constants.DateTimeFormatConstant.TIME_ZONE)
     private Timestamp updateAt;
-//    private RoleDTO roleId;
-    private String role;
+
+
 }

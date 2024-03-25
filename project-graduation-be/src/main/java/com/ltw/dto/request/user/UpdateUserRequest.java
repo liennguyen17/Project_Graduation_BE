@@ -39,4 +39,6 @@ public class UpdateUserRequest {
     private String subject;
     //    @NotNull(message = Constants.ErrorMessageUserValidation.ROLE_NOT_BLANK)
     private Integer roleId;
+    private String userCode;
+    private String className;
 }

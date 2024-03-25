@@ -43,6 +43,8 @@ public class NewService {
             news.setSubject(request.getSubject());
             news.setFile(request.getFile());
             news.setYear(request.getYear());
+            news.setImage(request.getImage());
+            news.setContent(request.getContent());
             news.setCreateAt(new Timestamp(System.currentTimeMillis()));
             news.setUpdateAt(new Timestamp(System.currentTimeMillis()));
             return modelMapper.map(newsRepository.saveAndFlush(news), NewDTO.class);
@@ -104,5 +106,11 @@ public class NewService {
     public Page<News> getNewByParam(CustomNewsQuery.NewsFilterParam param, PageRequest pageRequest){
         Specification<News> specification = CustomNewsQuery.getFilterNew(param);
         return newsRepository.findAll(specification, pageRequest);
+    }
+
+    public List<NewDTO> getAllNews(){
+        return newsRepository.findAll().stream().map(
+                news -> modelMapper.map(news, NewDTO.class)
+        ).toList();
     }
 }

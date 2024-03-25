@@ -30,6 +30,17 @@ public interface Constants {
         String PASSWORD_SIZE = "Mật khẩu phải có ít nhất 6, nhiều nhất 20 ký tự";
         String START_SIZE = "Số trang phải bắt đầu từ 0";
         String LIMIT_SIZE = "Số lượng người trong một trang là từ 5 đến 50 người";
+        String PASSWORD_OLD_NOT_BLANK = "Mật khẩu cũ không được để trống";
+        String PASSWORD_NEW_NOT_BLANK = "Mật khẩu mới không được để trống";
+        String PASSWORD_CONFIRM_NEW_NOT_BLANK = "Xác nhận mật khẩu mới không được để trống";
+        String PASSWORD_NEW_SIZE = "Mật khẩu mới phải có ít nhất 6 ký tự";
+        String PASSWORD_ERROR = "Mật khẩu không hợp lệ, mật khẩu phải chứa 1 ký tự viết hoa, viết thường, chữ số, 1 ký tự đặc biệt";
+        String USER_NOT_EXIST = "Người dùng không tồn tại";
+        String PASSWORD_OLD_NOT_CORRECT = "Mật khẩu cũ không chính xác";
+        String PASSWORD_NEW_NOT_VALID="Mật khẩu mới không hợp lệ";
+        String PASSWORD_NOT_MATCH="Xác nhận mật khẩu không khớp nhau";
+        String PASSWORD_DIFFERENT="Mật khẩu mới phải khác mật khẩu cũ";
+
     }
 
     interface ErrorMessageNotificationValidation{
@@ -45,6 +56,7 @@ public interface Constants {
     }
 
     interface ErrorMessageTopicValidation {
+        String NOT_FIND_TOPIC_BY_ID = "Không tìm thấy đề tài có ID là: ";
         String START_SIZE = "Số trang phải bắt đầu từ 0";
         String LIMIT_SIZE = "Số lượng đề tài trong một trang là từ 5 đến 50 bài";
     }
@@ -53,6 +65,15 @@ public interface Constants {
         String START_SIZE = "Số trang phải bắt đầu từ 0";
         String LIMIT_SIZE = "Số lượng trong một trang là từ 5 đến 50";
         String NOT_FIND_MASTER_DATA_BY_ID = "Không tìm thấy  ID là: ";
+    }
+
+    interface AuthValidation {
+        String USER_NAME_NOT_BLANK = "Tên đăng nhập không được để trống.";
+        String USER_NAME_SIZE = "Tên đăng nhập phải có ít nhất 6, nhiều nhất 100 kí tự";
+        String PASSWORD_NOT_BLANK = "Mật khẩu không được để trống";
+        String PASSWORD_SIZE = "Mật khẩu phải có ít nhất 6, nhiều nhất 20 kí tự";
+        String USER_NAME_ALREADY_EXISTED="Tên tài khoản đã tồn tại";
+        String EMAIL_ALREADY_EXISTED="Email đã tồn tại trong hệ thống";
     }
 
 

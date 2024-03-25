@@ -45,6 +45,8 @@ public class CreateUserRequest {
     //    @NotNull(message = Constants.ErrorMessageUserValidation.ROLE_NOT_BLANK)
     private Integer roleId;
     private String role;
+    private String userCode;
+    private String className;
 
 
 }

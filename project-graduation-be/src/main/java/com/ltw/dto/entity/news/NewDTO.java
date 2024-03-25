@@ -13,10 +13,13 @@ public class NewDTO {
     private String title;
     private String description;
     private String file;
+    private String content;
+    private String subject;
+    private String image;
+    private Year year;
     @JsonFormat(pattern = Constants.DateTimeFormatConstant.DATE_FORMAT, timezone = Constants.DateTimeFormatConstant.TIME_ZONE)
     private Timestamp createAt;
     @JsonFormat(pattern = Constants.DateTimeFormatConstant.DATE_FORMAT, timezone = Constants.DateTimeFormatConstant.TIME_ZONE)
     private Timestamp updateAt;
-    private Year year;
-    private String subject;
+
 }

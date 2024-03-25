@@ -8,7 +8,12 @@ public class UpdateTopicRequest {
     private Integer studentId;
     private Integer teacherId;
     private String nameTopic;
+    private String semester;
     private String status;
+    private String departmentManagement;
+    private String nameInternshipFacility;
+    private String menterInternshipFacility;
+    private String phoneInstructorInternshipFacility;
     private Float instructor;
     private Float reviewer;
     private Float boardMembers1;

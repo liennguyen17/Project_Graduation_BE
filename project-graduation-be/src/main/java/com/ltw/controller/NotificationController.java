@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,16 +31,19 @@ public class NotificationController {
     private final ModelMapper modelMapper;
 
     @PostMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGE')")
     public BaseItemResponse<NotificationDTO> createNotification(@Valid @RequestBody CreateNotificationRequest request) {
         return BaseResponse.successData(notificationService.createNotification(request));
     }
 
     @PutMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGE')")
     public BaseItemResponse<NotificationDTO> updateNotification(@Valid @RequestBody UpdateNotificationRequest request) {
         return BaseResponse.successData(notificationService.updateNotification(request));
     }
 
     @DeleteMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGE')")
     public BaseResponse deleteNotification(@Valid @RequestBody DeleteNotificationRequest request) {
         List<ErrorDetail> errorDetailList = notificationService.deleteNotification(request);
         if (errorDetailList == null) {
