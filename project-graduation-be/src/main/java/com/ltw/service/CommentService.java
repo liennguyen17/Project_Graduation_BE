@@ -1,6 +1,7 @@
 package com.ltw.service;
 
 import com.ltw.dto.entity.comment.CommentDTO;
+import com.ltw.dto.entity.comment.CommentUserDTO;
 import com.ltw.dto.request.comment.CreateCommentRequest;
 import com.ltw.exception.DataNotFoundException;
 import com.ltw.model.Comment;
@@ -12,7 +13,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service("CommentService")
 @RequiredArgsConstructor
@@ -41,11 +44,24 @@ public class CommentService {
             comment.setMessage(request.getMessage());
             comment.setCreateBy(user.getUsername());
             comment.setTopic(topic);
+            comment.setDescriptionFile(request.getDescriptionFile());
             comment.setCreateAt(new Timestamp(System.currentTimeMillis()));
             return modelMapper.map(commentsRepository.saveAndFlush(comment), CommentDTO.class);
         } catch (Exception ex) {
             throw new DataNotFoundException("Quá trình tạo nhận xét thành công " + ex);
         }
+    }
+
+    public List<CommentDTO> getAllComment() {
+        return commentsRepository.findAll().stream().map(
+                comment -> modelMapper.map(comment, CommentDTO.class)
+        ).toList();
+    }
+
+    public List<CommentUserDTO> listComment(Integer id) {
+        List<Comment> comments = commentsRepository.findByTopicId(id);
+        return comments.stream().map(comment -> modelMapper.map(comment, CommentUserDTO.class)).collect(Collectors.toList());
+
     }
 
 

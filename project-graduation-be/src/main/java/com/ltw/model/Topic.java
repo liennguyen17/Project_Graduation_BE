@@ -61,6 +61,13 @@ public class Topic {
     @Column(name = "board_members_3")
     private Float boardMembers3;
 
+    @Column(name = "scores_internship_facility")
+    private Float scoresInternshipFacility;
+
+    @Column(name = "result")
+    private Float result;
+
+
     @Column(name = "create_at")
     private Timestamp createAt;
 

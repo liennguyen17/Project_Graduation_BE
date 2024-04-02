@@ -9,6 +9,7 @@ public class NotificationUpdateValueDto {
     private User user;
     private String title;
     private String description;
+    private String content;
     private String file;
     private String isRead;
 }

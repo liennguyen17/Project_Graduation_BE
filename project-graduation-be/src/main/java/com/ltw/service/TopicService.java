@@ -1,5 +1,8 @@
 package com.ltw.service;
 
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.ltw.constant.Constants;
 import com.ltw.dto.entity.topic.TopicDTO;
 import com.ltw.dto.entity.topic.TopicDTO1;
@@ -23,6 +26,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,9 +63,11 @@ public class TopicService {
         topic.setBoardMembers1(request.getBoardMembers1());
         topic.setBoardMembers2(request.getBoardMembers2());
         topic.setBoardMembers3(request.getBoardMembers3());
+        topic.setScoresInternshipFacility(request.getScoresInternshipFacility());
         topic.setCreateAt(new Timestamp(System.currentTimeMillis()));
         topic.setUpdateAt(new Timestamp(System.currentTimeMillis()));
         Topic savedTopic = topicRepository.saveAndFlush(topic);
+        calculateResult(topic);
         return modelMapper.map(savedTopic, TopicDTO.class);
     }
 
@@ -93,6 +101,80 @@ public class TopicService {
         }
     }
 
+    public ByteArrayInputStream generatePdf(){
+        Document document = new Document(PageSize.A4);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+        Optional<User> currentUserOptional = userService.getCurrentUser();
+        if(currentUserOptional.isPresent()){
+            User currentUser = currentUserOptional.get();
+            if(currentUser.getRole().equals("STUDENT")){
+                Topic topic = topicRepository.findByStudent(currentUser);
+                try{
+                    PdfWriter writer = PdfWriter.getInstance(document, out);
+                    document.open();
+
+                    //Embed font
+                    BaseFont baseFont = BaseFont.createFont("src/main/resources/times-new-roman-14.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+                    BaseFont baseFont1 = BaseFont.createFont("src/main/resources/SVN-Times New Roman Italic.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+
+                    //header
+                    Paragraph header = new Paragraph();
+                    header.setAlignment(Element.ALIGN_CENTER);
+                    header.add(Chunk.NEWLINE);
+                    header.add(new Phrase("CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM", new Font(baseFont, 15, Font.BOLD)));
+                    header.add(Chunk.NEWLINE);
+                    header.add(new Phrase("Độc lập – Tự do – Hạnh phúc", new Font(baseFont, 15, Font.BOLD)));
+                    header.add(Chunk.NEWLINE);
+                    header.add(Chunk.NEWLINE);
+                    header.add(Chunk.NEWLINE);
+                    header.add(new Phrase("ĐƠN XIN XÁC NHẬN CỦA ĐƠN VỊ THỰC TẬP", new Font(baseFont, 18, Font.BOLD)));
+                    document.add(header);
+
+                    //body
+                    Paragraph body = new Paragraph();
+                    body.add(Chunk.NEWLINE);
+                    body.add(Chunk.NEWLINE);
+                    body.add(new Phrase("Kính gửi: " + topic.getNameInternshipFacility(), new Font(baseFont1, 14, Font.BOLD)));
+                    body.add(Chunk.NEWLINE);
+                    body.add(new Phrase("Tên tôi là: " + topic.getStudent().getName(), new Font(baseFont, 14)));
+                    body.add(Chunk.NEWLINE);
+                    body.add(new Phrase("Mã sinh viên: " + topic.getStudent().getUserCode(), new Font(baseFont, 14)));
+                    body.add(Chunk.NEWLINE);
+                    body.add(new Phrase("Sinh viên lớp: " + topic.getStudent().getClassName(), new Font(baseFont, 14)));
+                    document.add(body);
+
+                    //footer
+                    Paragraph footer = new Paragraph();
+//                    footer.setAlignment(Element.ALIGN_RIGHT);
+                    footer.add(Chunk.NEWLINE);
+                    footer.add(Chunk.NEWLINE);
+                    footer.add(new Phrase("                                                                                     Hà Nội, ngày ... tháng ... năm ...", new Font(baseFont1, 14)));
+                    footer.add(Chunk.NEWLINE);
+                    footer.add(new Phrase("             XÁC NHẬN CỦA                                                  NGƯỜI LÀM ĐƠN", new Font(baseFont, 14, Font.BOLD)));
+                    footer.add(Chunk.NEWLINE);
+//                    footer.add(new Phrase("XÁC NHẬN CỦA", new Font(baseFont, 12)));
+//                    footer.add(Chunk.NEWLINE);
+                    footer.add(new Phrase("           ĐƠN VỊ THỰC TẬP", new Font(baseFont, 14, Font.BOLD)));
+                    footer.add(Chunk.NEWLINE);
+                    footer.add(new Phrase("             (Ký tên, đóng dấu)", new Font(baseFont1, 14, Font.BOLD)));
+                    document.add(footer);
+
+                    document.close();
+
+
+                } catch (DocumentException | IOException e) {
+                    throw new RuntimeException(e);
+                }
+                return new ByteArrayInputStream(out.toByteArray());
+            } else {
+                throw new DataNotFoundException("Người dùng không phải là sinh viên.");
+            }
+        } else {
+            throw new DataNotFoundException("Không tìm thấy thông tin người dùng đăng nhập.");
+        }
+    }
+
     public boolean hasStudentSubmittedTopic(Integer userId) {
         return topicRepository.existsByStudentId(userId);
     }
@@ -117,8 +199,10 @@ public class TopicService {
         topic.setBoardMembers1(request.getBoardMembers1());
         topic.setBoardMembers2(request.getBoardMembers2());
         topic.setBoardMembers3(request.getBoardMembers3());
+        topic.setScoresInternshipFacility(request.getScoresInternshipFacility());
         topic.setCreateAt(new Timestamp(System.currentTimeMillis()));
         topic.setUpdateAt(new Timestamp(System.currentTimeMillis()));
+        calculateResult(topic);
         return modelMapper.map(topicRepository.saveAndFlush(topic), TopicDTO.class);
     }
 
@@ -157,6 +241,8 @@ public class TopicService {
         return topicRepository.findAll(specification, request);
     }
 
+
+
     public boolean existsById(Integer topicId) {
         return topicRepository.existsById(topicId);
     }
@@ -165,7 +251,24 @@ public class TopicService {
         return topicRepository.findById(topicId).orElseThrow(() -> new DataNotFoundException("Không tìm thấy topic với id là " + topicId));
     }
 
+    public void calculateResult(Topic topic) {
+        if (isAllValuesProvidedForCalculation(topic)) {
+            float scoresInternshipFacility = topic.getScoresInternshipFacility() >= 8.5 ? 1 : 0;
+            float boardMembersAvg = (topic.getBoardMembers1() + topic.getBoardMembers2() + topic.getBoardMembers3())/3;
+            float result = scoresInternshipFacility + ((boardMembersAvg*3) + topic.getInstructor() + topic.getReviewer())/5;
+            topic.setResult(result);
+        }
+    }
 
+    public boolean isAllValuesProvidedForCalculation(Topic topic) {
+        return topic.getScoresInternshipFacility() != null &&
+                topic.getInstructor() != null &&
+                topic.getReviewer() != null &&
+                topic.getBoardMembers1() != null &&
+                topic.getBoardMembers2() != null &&
+                topic.getBoardMembers3() != null;
+
+    }
 
 
 }

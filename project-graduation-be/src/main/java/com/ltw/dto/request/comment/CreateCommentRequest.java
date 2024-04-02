@@ -7,5 +7,6 @@ public class CreateCommentRequest {
     private String message;
 //    private String createBy;
     private String file;
+    private String descriptionFile;
     private Integer topicId;
 }

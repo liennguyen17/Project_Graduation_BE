@@ -19,4 +19,5 @@ public class UpdateTopicRequest {
     private Float boardMembers1;
     private Float boardMembers2;
     private Float boardMembers3;
+    private Float scoresInternshipFacility;
 }

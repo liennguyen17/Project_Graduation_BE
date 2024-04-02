@@ -13,6 +13,7 @@ public class NotificationDTO {
     private User user;
     private String title;
     private String description;
+    private String content;
     private String file;
     private String isRead;
     @JsonFormat(pattern = Constants.DateTimeFormatConstant.DATE_FORMAT, timezone = Constants.DateTimeFormatConstant.TIME_ZONE)

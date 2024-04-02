@@ -26,6 +26,9 @@ public class Notification {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "content")
+    private String content;
+
     @Column(name = "file")
     private String file;
 

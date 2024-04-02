@@ -2,18 +2,18 @@ package com.ltw.dto.entity.comment;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ltw.constant.Constants;
-import com.ltw.dto.entity.topic.TopicDTO1;
+import com.ltw.dto.entity.topic.TopicCommentDTO;
 import lombok.Data;
 
 import java.sql.Timestamp;
 
 @Data
-public class CommentDTO {
+public class CommentUserDTO {
     private String message;
     private String createBy;
     private String file;
     private String descriptionFile;
-    private TopicDTO1 topic;
+    private TopicCommentDTO topic;
     @JsonFormat(pattern = Constants.DateTimeFormatConstant.DATE_FORMAT, timezone = Constants.DateTimeFormatConstant.TIME_ZONE)
     private Timestamp createAt;
 }

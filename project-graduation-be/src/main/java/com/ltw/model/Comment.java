@@ -27,6 +27,9 @@ public class Comment {
     @Column(name = "file")
     private String file;
 
+    @Column(name = "description_file")
+    private String descriptionFile;
+
     @Column(name = "create_at")
     private Timestamp createAt;
 

@@ -13,6 +13,7 @@ public class CreateNotificationRequest {
     private String title;
     @NotBlank(message = Constants.ErrorMessageNotificationValidation.DESCRIPTION_NOT_BLANK)
     private String description;
+    private String content;
     private String file;
     private String isRead;
     //    @NotNull(message = )

@@ -1,6 +1,9 @@
 package com.ltw.service;
 
 import com.ltw.constant.Constants;
+import com.ltw.dto.entity.topic.TopicDTO;
+import com.ltw.dto.entity.topic.TopicStudentDTO;
+import com.ltw.dto.entity.topic.TopicTeacherDTO;
 import com.ltw.dto.entity.users.UserDTO;
 import com.ltw.dto.entity.users.UserDeleteDTO;
 import com.ltw.dto.entity.users.UserUpdateValueDto;
@@ -9,8 +12,10 @@ import com.ltw.dto.response.ErrorDetail;
 import com.ltw.email.EmailService;
 import com.ltw.exception.DataNotFoundException;
 import com.ltw.model.Role;
+import com.ltw.model.Topic;
 import com.ltw.model.User;
 import com.ltw.repository.roles.RolesRepository;
+import com.ltw.repository.topic.TopicRepository;
 import com.ltw.repository.users.CustomUserQuery;
 import com.ltw.repository.users.UsersRepository;
 import com.ltw.service.mapper.UserUpdateMapper;
@@ -42,6 +47,7 @@ public class UserService {
     private final ModelMapper modelMapper;
     private final UserUpdateMapper userUpdateMapper;
     private final PasswordEncoder encoder;
+    private final TopicRepository topicRepository;
     @Autowired
     private EmailService emailService;
     public UserDTO createUser(CreateUserRequest request){
@@ -307,6 +313,41 @@ public class UserService {
 
         emailService.sendEmailHtml(user.getEmail(), newPassword + " là mã khôi phục tài khoản hệ thống khóa luận tốt nghiệp của bạn !\n", emailContent);
 
+    }
+
+    public List<TopicTeacherDTO> getTopicsForTeacher(){
+        Optional<User> currentUserOptional = getCurrentUser();
+        if(currentUserOptional.isPresent()){
+            User currentUser = currentUserOptional.get();
+            if(currentUser.getRole().equals("TEACHER")){
+                List<Topic> topics = topicRepository.findByTeacher(currentUser);
+                List<TopicTeacherDTO> topicDTOS = new ArrayList<>();
+                for (Topic topic : topics){
+                    TopicTeacherDTO topicDTO = modelMapper.map(topic, TopicTeacherDTO.class);
+                    topicDTOS.add(topicDTO);
+                }
+                return topicDTOS;
+            } else {
+                throw new DataNotFoundException("Người dùng không phải là giáo viên.");
+            }
+        }else {
+            throw new DataNotFoundException("Không tìm thấy thông tin người dùng đăng nhập.");
+        }
+    }
+
+    public TopicStudentDTO getTopicForStudent(){
+        Optional<User> currentUserOptional = getCurrentUser();
+        if(currentUserOptional.isPresent()){
+            User currentUser = currentUserOptional.get();
+            if(currentUser.getRole().equals("STUDENT")){
+                Topic topic = topicRepository.findByStudent(currentUser);
+                return modelMapper.map(topic, TopicStudentDTO.class);
+            } else {
+                throw new DataNotFoundException("Người dùng không phải là sinh viên.");
+            }
+        } else {
+            throw new DataNotFoundException("Không tìm thấy thông tin người dùng đăng nhập.");
+        }
     }
 
 

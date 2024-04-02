@@ -46,6 +46,7 @@ public class NotificationService {
             Notification notification = modelMapper.map(request, Notification.class);
             notification.setTitle(request.getTitle());
             notification.setDescription(request.getDescription());
+            notification.setContent(request.getContent());
             notification.setFile(request.getFile());
             notification.setIsRead(request.getIsRead());
             notification.setUser(user);

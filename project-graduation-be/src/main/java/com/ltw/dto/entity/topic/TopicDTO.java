@@ -20,11 +20,13 @@ public class TopicDTO {
     private String nameInternshipFacility;
     private String menterInternshipFacility;
     private String phoneInstructorInternshipFacility;
+    private Float scoresInternshipFacility;
     private Float instructor;
     private Float reviewer;
     private Float boardMembers1;
     private Float boardMembers2;
     private Float boardMembers3;
+    private Float result;
     @JsonFormat(pattern = Constants.DateTimeFormatConstant.DATE_FORMAT, timezone = Constants.DateTimeFormatConstant.TIME_ZONE)
     private Timestamp createAt;
     @JsonFormat(pattern = Constants.DateTimeFormatConstant.DATE_FORMAT, timezone = Constants.DateTimeFormatConstant.TIME_ZONE)
