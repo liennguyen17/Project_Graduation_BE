@@ -13,7 +13,7 @@ public class UserDTO {
     private Integer id;
     private String name;
     private String username;
-    @JsonFormat(pattern = Constants.DateTimeFormatConstant.DATE_FORMAT, timezone = Constants.DateTimeFormatConstant.TIME_ZONE)
+    @JsonFormat(pattern = Constants.DateTimeFormatConstant.FORMAT_DATE, timezone = Constants.DateTimeFormatConstant.TIME_ZONE)
     private Date dob;
     private String address;
     private String email;

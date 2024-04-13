@@ -10,6 +10,7 @@ public class UpdateTopicRequest {
     private String nameTopic;
     private String semester;
     private String status;
+    private String note;
     private String departmentManagement;
     private String nameInternshipFacility;
     private String menterInternshipFacility;

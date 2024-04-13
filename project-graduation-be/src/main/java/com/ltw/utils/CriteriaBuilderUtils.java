@@ -14,10 +14,11 @@ public class CriteriaBuilderUtils {
                                                                    String keyword,
                                                                    String... fieldNames) {
         List<Predicate> predicates = new ArrayList<>();
+        String trimKeyword = keyword.trim();
         if (fieldNames != null && fieldNames.length > 0) {
             for (String fieldName : fieldNames) {
                 predicates.add(criteriaBuilder
-                        .like(criteriaBuilder.lower(root.get(fieldName)), "%" + keyword.toLowerCase(Locale.ROOT) + "%"));
+                        .like(criteriaBuilder.lower(root.get(fieldName)), "%" + trimKeyword.toLowerCase(Locale.ROOT) + "%"));
             }
         }
         return criteriaBuilder.or(predicates.toArray(new Predicate[0]));

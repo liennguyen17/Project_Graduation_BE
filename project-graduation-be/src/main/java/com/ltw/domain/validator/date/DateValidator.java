@@ -11,7 +11,8 @@ public class DateValidator implements ConstraintValidator<DateAnnotation, String
     public boolean isValid(String date, ConstraintValidatorContext constraintValidatorContext) {
         if (date == null)
             return true;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         simpleDateFormat.setLenient(false);
         try {
             return simpleDateFormat.parse(date) != null;

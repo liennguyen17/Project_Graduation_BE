@@ -48,32 +48,69 @@ public class CustomUserQuery {
                 );
 
             }
-            if(StringUtils.hasText(param.getAddress())){
-                predicates.add(criteriaBuilder.like(root.get("address"), "%" + param.getAddress() + "%"));
+
+
+
+            if (StringUtils.hasText(param.getAddress())) {
+                String trimmedAddress = param.getAddress().trim();
+                if (!trimmedAddress.isEmpty()) {
+                    predicates.add(criteriaBuilder.like(root.get("address"), "%" + trimmedAddress + "%"));
+                }
             }
-            if(StringUtils.hasText(param.subject)){
-                predicates.add(criteriaBuilder.like(root.get("subject"), "%" + param.getSubject() + "%"));
+
+            if (StringUtils.hasText(param.getSubject())) {
+                String trimmed = param.getSubject().trim();
+                if (!trimmed.isEmpty()) {
+                    predicates.add(criteriaBuilder.like(root.get("subject"), "%" + trimmed + "%"));
+                }
             }
-            if(StringUtils.hasText(param.getEmail())){
-                predicates.add(criteriaBuilder.equal(root.get("email"), param.email));
+
+
+            if (StringUtils.hasText(param.getEmail())) {
+                String trimmed = param.getEmail().trim();
+                if (!trimmed.isEmpty()) {
+                    predicates.add(criteriaBuilder.equal(root.get("email"), trimmed));
+                }
             }
-            if(StringUtils.hasText(param.getPhone())){
-                predicates.add(criteriaBuilder.equal(root.get("phone"), param.phone));
+
+            if (StringUtils.hasText(param.getPhone())) {
+                String trimmed = param.getPhone().trim();
+                if (!trimmed.isEmpty()) {
+                    predicates.add(criteriaBuilder.equal(root.get("phone"), trimmed));
+                }
             }
-            if(StringUtils.hasText(param.getRole())){
-                predicates.add(criteriaBuilder.equal(root.get("role"), param.role));
+            if (StringUtils.hasText(param.getRole())) {
+                String trimmed = param.getRole().trim();
+                if (!trimmed.isEmpty()) {
+                    predicates.add(criteriaBuilder.equal(root.get("role"), trimmed));
+                }
             }
-            if(StringUtils.hasText(param.getUserCode())){
-                predicates.add(criteriaBuilder.equal(root.get("userCode"), param.userCode));
+            if (StringUtils.hasText(param.getUserCode())) {
+                String trimmed = param.getUserCode().trim();
+                if (!trimmed.isEmpty()) {
+                    predicates.add(criteriaBuilder.equal(root.get("userCode"), trimmed));
+                }
             }
-            if(StringUtils.hasText(param.getClassName())){
-                predicates.add(criteriaBuilder.equal(root.get("className"), param.className));
+
+            if (StringUtils.hasText(param.getClassName())) {
+                String trimmed = param.getClassName().trim();
+                if (!trimmed.isEmpty()) {
+                    predicates.add(criteriaBuilder.like(root.get("className"), "%" + trimmed + "%"));
+                }
             }
-            if(StringUtils.hasText(param.getName())){
-                predicates.add(criteriaBuilder.like(root.get("name"), "%" + param.getName() + "%"));
+
+            if (StringUtils.hasText(param.getName())) {
+                String trimmed = param.getName().trim();
+                if (!trimmed.isEmpty()) {
+                    predicates.add(criteriaBuilder.like(root.get("name"), "%" + trimmed + "%"));
+                }
             }
-            if(StringUtils.hasText(param.getUsername())){
-                predicates.add(criteriaBuilder.like(root.get("username"), "%" + param.getUsername() + "%"));
+
+            if (StringUtils.hasText(param.getUsername())) {
+                String trimmed = param.getUsername().trim();
+                if (!trimmed.isEmpty()) {
+                    predicates.add(criteriaBuilder.like(root.get("username"), "%" + trimmed + "%"));
+                }
             }
 //            if (param.startDate != null && param.endDate != null) {
 ////                Timestamp startDateValue = new Timestamp(param.startDate);

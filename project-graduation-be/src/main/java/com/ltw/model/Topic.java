@@ -67,6 +67,8 @@ public class Topic {
     @Column(name = "result")
     private Float result;
 
+    @Column(name = "note")
+    private String note;
 
     @Column(name = "create_at")
     private Timestamp createAt;

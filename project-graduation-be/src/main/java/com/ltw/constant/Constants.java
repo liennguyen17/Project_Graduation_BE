@@ -63,7 +63,7 @@ public interface Constants {
 
     interface ErrorMasterDataValidation {
         String START_SIZE = "Số trang phải bắt đầu từ 0";
-        String LIMIT_SIZE = "Số lượng trong một trang là từ 5 đến 50";
+        String LIMIT_SIZE = "Số lượng trong một trang là từ 5 đến 100";
         String NOT_FIND_MASTER_DATA_BY_ID = "Không tìm thấy  ID là: ";
     }
 
@@ -86,6 +86,8 @@ public interface Constants {
         String DATE_TIME_FORMAT = "dd/MM/yyyy HH:mm:ss";
         String DATE_FORMAT = "dd/MM/yyyy";
         String TIME_ZONE = "Asia/Ho_Chi_Minh";
+
+        String FORMAT_DATE="yyyy-MM-dd";
     }
 
 

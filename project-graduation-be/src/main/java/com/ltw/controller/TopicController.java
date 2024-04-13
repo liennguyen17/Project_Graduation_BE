@@ -14,11 +14,16 @@ import com.ltw.service.TopicService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,19 +35,19 @@ public class TopicController {
     private final ModelMapper modelMapper;
 
     @PostMapping
-    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGE','TEACHER','STUDENT')")
+//    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGE','TEACHER','STUDENT')")
     public BaseItemResponse<TopicDTO> createTopic(@Valid @RequestBody CreateTopicRequest request) {
         return BaseResponse.successData(topicService.createTopic(request));
     }
 
     @PutMapping
-    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGE','TEACHER')")
+//    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGE','TEACHER')")
     public BaseItemResponse<TopicDTO> updateTopic(@Valid @RequestBody UpdateTopicRequest request) {
         return BaseResponse.successData(topicService.updateTopic(request));
     }
 
     @DeleteMapping
-    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGE','TEACHER')")
+//    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGE','TEACHER')")
     public BaseResponse deleteNotification(@Valid @RequestBody DeleteTopicRequest request) {
         List<ErrorDetail> errorDetailList = topicService.deleteTopics(request);
         if (errorDetailList == null) {
@@ -65,5 +70,19 @@ public class TopicController {
     @PostMapping("/student")
     public  BaseItemResponse<TopicDTO1> studentCreateTopic(@Valid @RequestBody StudentCreateTopicRequest request){
         return BaseResponse.successData(topicService.studentCreateTopic(request));
+    }
+
+
+    @GetMapping(value = "/generate-pdf" ,produces = MediaType.APPLICATION_PDF_VALUE)
+//    @PreAuthorize("hasAnyAuthority('STUDENT')")
+    public ResponseEntity<InputStreamResource> generatePdf(){
+        ByteArrayInputStream bis = topicService.generatePdf();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=don_xin_xac_nhan.pdf");
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(bis));
     }
 }

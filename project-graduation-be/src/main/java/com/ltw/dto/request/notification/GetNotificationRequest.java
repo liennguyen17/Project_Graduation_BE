@@ -10,5 +10,5 @@ public class GetNotificationRequest extends CustomNotificationQuery.Notification
     @Min(value = 0, message = Constants.ErrorMessageNotificationValidation.START_SIZE)
     private Integer start = 0;
     @Range(min = 5, max = 50, message = Constants.ErrorMessageNotificationValidation.LIMIT_SIZE)
-    private Integer limit = 10;
+    private Integer limit = 50;
 }

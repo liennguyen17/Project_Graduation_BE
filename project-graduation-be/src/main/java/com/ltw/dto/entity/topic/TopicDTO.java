@@ -15,6 +15,7 @@ public class TopicDTO {
     private UserDTO1 teacher;
     private String nameTopic;
     private String status;
+    private String note;
     private String semester;
     private String departmentManagement;
     private String nameInternshipFacility;

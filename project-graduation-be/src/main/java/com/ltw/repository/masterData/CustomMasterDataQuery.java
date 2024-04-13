@@ -24,6 +24,8 @@ public class CustomMasterDataQuery {
                                 "type", "code", "name")
                 );
             }
+            query.orderBy(criteriaBuilder.desc(root.get("id")));
+
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         })));
     }

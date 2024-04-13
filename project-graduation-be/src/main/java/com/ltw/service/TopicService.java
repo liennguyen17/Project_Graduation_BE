@@ -122,9 +122,13 @@ public class TopicService {
                     Paragraph header = new Paragraph();
                     header.setAlignment(Element.ALIGN_CENTER);
                     header.add(Chunk.NEWLINE);
+                    header.add(Chunk.NEWLINE);
                     header.add(new Phrase("CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM", new Font(baseFont, 15, Font.BOLD)));
                     header.add(Chunk.NEWLINE);
                     header.add(new Phrase("Độc lập – Tự do – Hạnh phúc", new Font(baseFont, 15, Font.BOLD)));
+                    header.add(Chunk.NEWLINE);
+                    header.add(new Phrase("---------", new Font(baseFont, 15, Font.BOLD)));
+                    header.add(Chunk.NEWLINE);
                     header.add(Chunk.NEWLINE);
                     header.add(Chunk.NEWLINE);
                     header.add(Chunk.NEWLINE);
@@ -141,7 +145,20 @@ public class TopicService {
                     body.add(Chunk.NEWLINE);
                     body.add(new Phrase("Mã sinh viên: " + topic.getStudent().getUserCode(), new Font(baseFont, 14)));
                     body.add(Chunk.NEWLINE);
-                    body.add(new Phrase("Sinh viên lớp: " + topic.getStudent().getClassName(), new Font(baseFont, 14)));
+                    body.add(new Phrase("Sinh viên lớp: " + topic.getStudent().getClassName() + " - Khoa Công nghệ thông tin - Học viện Nông nghiệp Việt Nam", new Font(baseFont, 14)));
+//                    body.add(Chunk.NEWLINE);
+//                    body.add(new Phrase(" - Khoa Công nghệ thông tin - Học viện Nông nghiệp Việt Nam" , new Font(baseFont, 14)));
+                    body.add(Chunk.NEWLINE);
+                    body.add(new Phrase("Được sự đồng ý của đơn vị, trong thời gian từ ngày..................đến ngày..................." , new Font(baseFont, 14)));
+                    body.add(Chunk.NEWLINE);
+                    body.add(new Phrase("tôi thực tập, làm quen với công việc thực tế tại đơn vị. Dự kiến tôi được giao những công " , new Font(baseFont, 14)));
+                    body.add(new Phrase("việc sau với thời gian.................buổi / 1 tuần" , new Font(baseFont, 14)));
+                    body.add(Chunk.NEWLINE);
+                    body.add(new Phrase("Đề tài thực tập : " + topic.getNameTopic() , new Font(baseFont, 14)));
+                    body.add(Chunk.NEWLINE);
+                    body.add(new Phrase("Họ và tên cán bộ hướng dẫn tại đơn vị thực tập: " + topic.getMenterInternshipFacility(), new Font(baseFont, 14)));
+                    body.add(Chunk.NEWLINE);
+                    body.add(new Phrase("Số điện thoại cán bộ hướng dẫn tại đơn vị thực tập: " + topic.getPhoneInstructorInternshipFacility(), new Font(baseFont, 14)));
                     document.add(body);
 
                     //footer
@@ -187,6 +204,7 @@ public class TopicService {
         Topic topic = topicOptional.get();
         topic.setNameTopic(request.getNameTopic());
         topic.setStatus(request.getStatus());
+        topic.setNote(request.getNote());
         topic.setTeacher(teacher);
         topic.setStudent(student);
         topic.setSemester(request.getSemester());

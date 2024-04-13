@@ -10,6 +10,6 @@ import org.hibernate.validator.constraints.Range;
 public class GetMasterDataRequest extends CustomMasterDataQuery.MasterDataFilterParam {
     @Min(value = 0, message = Constants.ErrorMasterDataValidation.START_SIZE)
     private Integer start = 0;
-    @Range(min = 5, max = 50, message = Constants.ErrorMasterDataValidation.LIMIT_SIZE)
+    @Range(min = 5, max = 100, message = Constants.ErrorMasterDataValidation.LIMIT_SIZE)
     private Integer limit = 10;
 }

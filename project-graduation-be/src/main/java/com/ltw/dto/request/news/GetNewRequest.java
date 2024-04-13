@@ -10,5 +10,5 @@ public class GetNewRequest extends CustomNewsQuery.NewsFilterParam {
     @Min(value = 0, message = Constants.ErrorMessageNewsValidation.START_SIZE)
     private Integer start = 0;
     @Range(min = 5, max = 50, message = Constants.ErrorMessageNewsValidation.LIMIT_SIZE)
-    private Integer limit = 10;
+    private Integer limit = 50;
 }

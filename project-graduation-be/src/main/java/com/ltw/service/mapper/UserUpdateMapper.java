@@ -18,7 +18,7 @@ public interface UserUpdateMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mappings({
-            @Mapping(target = "dob", source = "dob", dateFormat = "dd/MM/yyyy"),
+            @Mapping(target = "dob", source = "dob", dateFormat = "yyyy-MM-dd"),
 //            @Mapping(target = "roleId", ignore = true),
             @Mapping(target = "createAt", ignore = true),
             @Mapping(target = "updateAt", ignore = true),

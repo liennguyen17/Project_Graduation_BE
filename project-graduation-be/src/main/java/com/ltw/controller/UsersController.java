@@ -1,6 +1,8 @@
 package com.ltw.controller;
 
 import com.ltw.constant.ErrorCodeDefs;
+import com.ltw.dto.entity.topic.TopicStudentDTO;
+import com.ltw.dto.entity.topic.TopicTeacherDTO;
 import com.ltw.dto.entity.users.UserDTO;
 import com.ltw.dto.request.user.*;
 import com.ltw.dto.response.BaseItemResponse;
@@ -28,19 +30,19 @@ public class UsersController {
     private final ModelMapper modelMapper;
 
     @PostMapping("")
-    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGE','TEACHER')")
+//    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGE','TEACHER')")
     public BaseItemResponse<UserDTO> createUser(@Valid @RequestBody CreateUserRequest request){
         return BaseResponse.successData(userService.createUser(request));
     }
 
     @PutMapping
-    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGE','TEACHER','STUDENT')")
+//    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGE','TEACHER','STUDENT')")
     public BaseItemResponse<UserDTO> updateUser(@Valid @RequestBody UpdateUserRequest request){
         return BaseResponse.successData(userService.updateUser(request));
     }
 
     @DeleteMapping()
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+//    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public BaseResponse deleteUsers1(@Valid @RequestBody DeleteUsersRequest request) {
         List<ErrorDetail> errorDetailList = userService.deleteUsers(request);
         if (errorDetailList == null) {
@@ -67,6 +69,15 @@ public class UsersController {
                 .map(e -> modelMapper.map(e,UserDTO.class)).collect(Collectors.toList()), (int)userPage.getTotalElements());
     }
 
+    @GetMapping("/topic/teacher")
+    public BaseListResponse<TopicTeacherDTO> getTopicsForTeacher(){
+        return BaseResponse.successListData(userService.getTopicsForTeacher(), userService.getTopicsForTeacher().size());
+    }
+    @GetMapping("/topic/student")
+    public BaseItemResponse<TopicStudentDTO> getTopicForStudent(){
+        return BaseResponse.successData(userService.getTopicForStudent());
+    }
+
     @GetMapping("/profile")
     public BaseItemResponse<UserDTO> getUserProfile() {
         return BaseResponse.successData(userService.getUserProfile());
@@ -85,7 +96,7 @@ public class UsersController {
         return BaseResponse.successData("Quá trình thực hiện chức năng quên mật khẩu thành công");
     }
 
-    @GetMapping("/{role}")
+    @GetMapping("/roles/{role}")
     public BaseItemResponse<UserDTO> findUserByRole(@PathVariable String role) {
         return BaseResponse.successData(userService.find_UserByRole(role));
     }

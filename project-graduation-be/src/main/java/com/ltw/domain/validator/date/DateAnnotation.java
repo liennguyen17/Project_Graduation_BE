@@ -15,7 +15,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Documented
 public @interface DateAnnotation {
-    String message() default "Ngày không đúng định dạng (dd/mm/yyyy)!";
+    String message() default "Ngày không đúng định dạng (yyyy-MM-dd)!";
 
     Class<?>[] groups() default {};
 

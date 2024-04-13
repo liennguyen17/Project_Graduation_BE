@@ -40,7 +40,7 @@ public class CreateUserRequest {
     private String email;
     @NotBlank(message = Constants.ErrorMessageUserValidation.PHONE_NOT_BLANK)
     private String phone;
-    @NotBlank(message = Constants.ErrorMessageUserValidation.SUBJECT_NOT_BLANK)
+//    @NotBlank(message = Constants.ErrorMessageUserValidation.SUBJECT_NOT_BLANK)
     private String subject;
     //    @NotNull(message = Constants.ErrorMessageUserValidation.ROLE_NOT_BLANK)
     private Integer roleId;

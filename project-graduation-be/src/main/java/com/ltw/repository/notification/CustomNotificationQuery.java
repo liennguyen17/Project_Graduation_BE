@@ -24,6 +24,8 @@ public class CustomNotificationQuery {
                                 "title", "description", "isRead")
                 );
             }
+            query.orderBy(criteriaBuilder.desc(root.get("id")));
+
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         })));
     }

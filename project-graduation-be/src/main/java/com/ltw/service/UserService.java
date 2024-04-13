@@ -57,7 +57,7 @@ public class UserService {
             User user = User.builder()
                     .username(request.getUsername())
                     .name(request.getName())
-                    .dob(DateUtils.convertDateFromString(request.getDob(), Constants.DateTimeFormatConstant.DATE_FORMAT))
+                    .dob(DateUtils.convertDateFromString(request.getDob(), Constants.DateTimeFormatConstant.FORMAT_DATE))
                     .email(request.getEmail())
                     .phone(request.getPhone())
                     .address(request.getAddress())
