@@ -31,19 +31,19 @@ public class NotificationController {
     private final ModelMapper modelMapper;
 
     @PostMapping
-//    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGE')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public BaseItemResponse<NotificationDTO> createNotification(@Valid @RequestBody CreateNotificationRequest request) {
         return BaseResponse.successData(notificationService.createNotification(request));
     }
 
     @PutMapping
-//    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGE')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public BaseItemResponse<NotificationDTO> updateNotification(@Valid @RequestBody UpdateNotificationRequest request) {
         return BaseResponse.successData(notificationService.updateNotification(request));
     }
 
     @DeleteMapping
-//    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGE')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public BaseResponse deleteNotification(@Valid @RequestBody DeleteNotificationRequest request) {
         List<ErrorDetail> errorDetailList = notificationService.deleteNotification(request);
         if (errorDetailList == null) {

@@ -35,19 +35,19 @@ public class TopicController {
     private final ModelMapper modelMapper;
 
     @PostMapping
-//    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGE','TEACHER','STUDENT')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','TEACHER','STUDENT')")
     public BaseItemResponse<TopicDTO> createTopic(@Valid @RequestBody CreateTopicRequest request) {
         return BaseResponse.successData(topicService.createTopic(request));
     }
 
     @PutMapping
-//    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGE','TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','TEACHER')")
     public BaseItemResponse<TopicDTO> updateTopic(@Valid @RequestBody UpdateTopicRequest request) {
         return BaseResponse.successData(topicService.updateTopic(request));
     }
 
     @DeleteMapping
-//    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGE','TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','TEACHER')")
     public BaseResponse deleteNotification(@Valid @RequestBody DeleteTopicRequest request) {
         List<ErrorDetail> errorDetailList = topicService.deleteTopics(request);
         if (errorDetailList == null) {

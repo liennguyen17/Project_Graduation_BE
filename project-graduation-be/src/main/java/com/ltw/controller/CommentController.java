@@ -24,7 +24,7 @@ public class CommentController {
     private final ModelMapper modelMapper;
 
     @PostMapping
-//    @PreAuthorize("hasAnyAuthority('TEACHER')")
+    @PreAuthorize("hasAnyAuthority('TEACHER')")
     public BaseItemResponse<CommentDTO> createComment(@Valid @RequestBody CreateCommentRequest request) {
         return BaseResponse.successData(commentService.createComment(request));
     }

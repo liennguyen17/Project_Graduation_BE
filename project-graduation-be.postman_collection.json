@@ -1,0 +1,1047 @@
+{
+	"info": {
+		"_postman_id": "f917439d-d7ef-4b24-a3e4-3f161b4a4e15",
+		"name": "project-graduation-be",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26155399"
+	},
+	"item": [
+		{
+			"name": "news",
+			"item": [
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/news/3",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"news",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getList",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"start\":0,\r\n    \"limit\":7\r\n    // \"getAll\":false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/news/filter",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"news",
+								"filter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createNew",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"Test web SEM\",\r\n    \"description\":\"ljfljsajf\",\r\n    \"file\":\"saljkfasj\",\r\n    \"year\":2020,\r\n    \"subject\":\"Công nghệ thông tin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/news",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"news"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateNew",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":7,\r\n    \"title\":\"Test web SEM to go to\",\r\n    \"description\":\"ljfljsajf\",\r\n    \"file\":\"saljkfasj\",\r\n    \"year\":2020,\r\n    \"subject\":\"Công nghệ thông tin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/news",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"news"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter and getList",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"start\":0,\r\n    \"limit\":7\r\n    // keywords: tìm kiếm nếu có từ khóa nào nằm trong trường tiêu đề, mô tả, bộ môn thì đều trả về kết quả ko phân biệt chữ hoa và chữ thường \r\n    // \"keywords\":\"Công nghệ phần mềm\",\r\n    // ,\"year\":2021,\r\n    \r\n    // \"sortField\":\"title\",\r\n    // \"sortType\":\"DESC\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/news/filter",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"news",
+								"filter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteNews",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsaWVuMTIzNCIsIlhBVVRIT1IiOiJBRE1JTiIsImlhdCI6MTcwOTk3MzEyOSwiZXhwIjoxNzEwMDA5MTI5fQ.HUucSMKE1261HLURr4e45HR7Oo8qfiRFWnimVI4Qqf0vciTMflcUBHwv3UFqAMC7NIf38uFyUIFwkYclgfdgBQ",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "createUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Nguyen Thi Lien 02\",\r\n    \"username\":\"lien123\",\r\n    \"password\":\"123456aA@\",\r\n    \"dob\":\"22/12/2000\",\r\n    \"address\":\"Bac Ninh\",\r\n    \"email\":\"lien@gmail.com\",\r\n    \"phone\":\"0955366282\",\r\n    \"subject\":\"CNTT\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUser",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n        \"name\": \"Nguyen Thi Lien\",\r\n        \"username\": \"lien1234\",\r\n        \"dob\": \"17/2/2002\",\r\n        \"address\": \"Bac Ninh\",\r\n        \"email\": \"lien@gmail.com\",\r\n        \"phone\": \"0955366282\",\r\n        \"subject\": \"CNTT\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getList",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"start\":0,\r\n    \"limit\":7\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/filter",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"filter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "filter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"start\": 0,\r\n    // \"limit\": 7,\r\n    // \"keywords\": \"la\",\r\n    \"sortField\": \"name\",\r\n    \"sortType\": \"DESC\",\r\n    \"phone\":\"0955366277\",\r\n    \"email\":\"lien4@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/filter",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"filter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteUser",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"ids\":[6]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "changePassword",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0cmFtYW5oMSIsIlhBVVRIT1IiOiJTVFVERU5UIiwiaWF0IjoxNzA5ODcxNDczLCJleHAiOjE3MDk5MDc0NzN9.K5MoWClnmp4hpc3SNaARgJpoQ92xeWhNAOwY-JrkiXqvaJbog_X24e9sRdFG15j1DIgiVoL6J0sGIsUoN9Lcbw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"oldPassword\":\"123456aA@\",\r\n    \"newPassword\":\"0123456aA@\",\r\n    \"confirmNewPassword\":\"0123456aA@\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/change/password",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"change",
+								"password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ForgotPasswordRequest",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0cmFtYW5oMSIsIlhBVVRIT1IiOiJTVFVERU5UIiwiaWF0IjoxNzA5ODczNjUxLCJleHAiOjE3MDk5MDk2NTF9.vMtZPOsrha7xEyV854y2yvzJy3W9DZCEtqsvGsjWCZf2IzotP07TCJddntjG1RhkH_itBQpFv9q7wzUaaA-Fiw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/profile",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "notifications",
+			"item": [
+				{
+					"name": "createNotification",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"Thông báo đăng ký đề tài khóa luận tốt nghiệp khoa công nghệ thông tin\",\r\n    \"description\":\"Các sinh đủ các yêu cầu vào trang web để đăng ký đề tài và giáo viên hướng đẫn trước ngày 12/12/2024\",\r\n    \"file\":\"áddsfa\",\r\n    \"isRead\":\"read\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/notifications",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"notifications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateNotification",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"id\": 3,\r\n    \"title\":\"Thông báo nộp đề tài khóa luận tốt nghiệp khoa công nghệ thông tin 2\",\r\n    \"description\":\"sinh viên nộp lại bản đăng ký đề tài gửi cho khoa về văn phòng\",\r\n    \"file\":\"file dính kèm\",\r\n    \"isRead\":\"read\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/notifications",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"notifications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ids\":[9]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/notifications",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"notifications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listNotification",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/notifications/filter",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"notifications",
+								"filter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "filter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"start\": 0,\r\n    \"limit\": 7,\r\n    //keywords thuoc cac truong nay: \"title\", \"description\",\"isRead\"\r\n    \"keywords\": \"nộp lại bản đăng ký\",\r\n    \"sortField\": \"title\",\r\n    \"sortType\": \"DESC\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/notifications/filter",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"notifications",
+								"filter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/notifications/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"notifications",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comment",
+			"item": [
+				{
+					"name": "createComment",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsaWVuMTIzNCIsIlhBVVRIT1IiOiJBRE1JTiIsImlhdCI6MTcwOTc4MjI0OSwiZXhwIjoxNzA5ODE4MjQ5fQ.oa2xCr3qpvquwC75n0LY7sUNPnVUMFKztixdB7cIcbUae49UMcjQjrM2PTrETXrwlGIPY7PjmduvBCPjZUCrrg",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "master-data",
+			"item": [
+				{
+					"name": "CreateMasterData",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type\":\"subject\",\r\n    \"code\":\"SUB01\",\r\n    \"name\":\"Bộ môn trí tuệ nhân tạo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/master-data",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"master-data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 6,\r\n        \"type\": \"subject\",\r\n        \"code\": \"SUB01\"\r\n        // \"name\": \"Bộ môn công nghệ thông tin 02\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/master-data",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"master-data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getList",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/master-data/filter",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"master-data",
+								"filter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "filter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"start\": 0,\r\n    \"limit\": 5,\r\n    \"keywords\": \"thông tin\",\r\n    \"sortField\": \"name\"\r\n    // \"sortType\": \"ASC\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/master-data/filter",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"master-data",
+								"filter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/master-data/5",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"master-data",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsaWVuMTIzNCIsIlhBVVRIT1IiOiJBRE1JTiIsImlhdCI6MTcwOTk3MzEyOSwiZXhwIjoxNzEwMDA5MTI5fQ.HUucSMKE1261HLURr4e45HR7Oo8qfiRFWnimVI4Qqf0vciTMflcUBHwv3UFqAMC7NIf38uFyUIFwkYclgfdgBQ",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Hoàng Trâm Anh\",\r\n    \"username\":\"tramanh1\",\r\n    \"password\":\"123456aA@\",\r\n    \"email\":\"tramanh@gmail.com\",\r\n    \"phone\":\"0835701321\",\r\n    \"role\":\"STUDENT\"\r\n}\r\n// \"password\":\"123456aA@\",",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// admin\r\n// {\r\n//     \"username\":\"lien1234\",\r\n//     \"password\":\"123456aA@\"\r\n// }\r\n\r\n// student\r\n{\r\n    \"username\":\"tramanh1\",\r\n    \"password\":\"0123456aA@\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "topic",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"student\":23,\r\n    \"teacher\":2,\r\n    \"nameTopic\":\"Xây dựng hệ thống quản lý khóa luận tốt nghiệp\",\r\n    \"status\":\"pending\",\r\n    \"instructor\":9,\r\n    \"reviewer\":8,\r\n    \"boardMembers1\":7,\r\n    \"boardMembers2\":9,\r\n    \"boardMembers3\":8\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/topic",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"topic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsaWVuMTIzNCIsIlhBVVRIT1IiOiJBRE1JTiIsImlhdCI6MTcxMDE0NjMxMSwiZXhwIjoxNzEwMTgyMzExfQ.Pl5VzULWIvdUNjBZtFrr6CGNrlC6ZOddUBe2hY9KXJO6QChsHCo_fOf9qfnzVVZcqK8SykU9Bhtrcge06SegDg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ids\":[4]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/topic",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"topic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "studentCreateTopic",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ2YW5udXUiLCJYQVVUSE9SIjoiU1RVREVOVCIsImlhdCI6MTcxMDE0NTkyOSwiZXhwIjoxNzEwMTgxOTI5fQ.4sUAqWS7ntylHyuJpTPCiE-aaZWzgZi5vrSqhMumIpDpU-Pc_M8jNTNdBxI7rkfTiqa1i7uCAeQsnpdJGyW__A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"teacher\":2,\r\n    \"nameTopic\":\"Xây dựng web bán quần áo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/topic/student",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"topic",
+								"student"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "filter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"start\": 0,\r\n    \"limit\": 7,\r\n    //keywords thuoc cac truong nay: \"nameTopic\", \"status\"\r\n    \"keywords\": \"pending\",\r\n    \"sortField\": \"nameTopic\",\r\n    \"sortType\": \"DESC\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/topic/filter",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"topic",
+								"filter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listTopic",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/topic/filter",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"topic",
+								"filter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "filebase",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

@@ -28,19 +28,19 @@ public class NewsController {
     private final ModelMapper modelMapper;
 
     @PostMapping("")
-//    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGE')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public BaseItemResponse<NewDTO> createNew(@Valid @RequestBody CreateNewsRequest request){
         return BaseResponse.successData(newService.createNew(request));
     }
 
     @PutMapping
-//    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGE')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public BaseItemResponse<NewDTO> updateNew(@Valid @RequestBody UpdateNewsRequest request){
         return BaseResponse.successData(newService.updateNew(request));
     }
 
     @DeleteMapping
-//    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGE')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public BaseResponse deleteNews(@Valid @RequestBody DeleteNewsRequest request){
         List<ErrorDetail> errorDetails = newService.deleteNews(request);
         if (errorDetails == null) {

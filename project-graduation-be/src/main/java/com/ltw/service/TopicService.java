@@ -254,6 +254,8 @@ public class TopicService {
         return modelMapper.map(topic.get(), TopicDTO.class);
     }
 
+
+
     public Page<Topic> getTopicByParam(CustomTopicQuery.TopicFilterParam param, PageRequest request) {
         Specification<Topic> specification = CustomTopicQuery.getFilterTopic(param);
         return topicRepository.findAll(specification, request);
@@ -287,6 +289,8 @@ public class TopicService {
                 topic.getBoardMembers3() != null;
 
     }
+
+
 
 
 }

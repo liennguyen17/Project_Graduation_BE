@@ -29,11 +29,7 @@ public class CustomTopicQuery {
                 );
             }
 
-//            if(param.getStudent() != null && !StringUtils.isEmpty(param.getStudent().getName())){
-//                predicates.add(criteriaBuilder.like(
-//                        criteriaBuilder.lower(root.get("student").get("name")), "%" + param.getStudent().getName().toLowerCase(Locale.ROOT) + "%"
-//                ));
-//            }
+
 
             if (param.getStudent() != null && !StringUtils.isEmpty(param.getStudent().getName())) {
                 String trimmedName = param.getStudent().getName().trim();

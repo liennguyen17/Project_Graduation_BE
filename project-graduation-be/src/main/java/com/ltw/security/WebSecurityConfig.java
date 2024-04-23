@@ -118,20 +118,32 @@ public class WebSecurityConfig {
                 .requestMatchers("/users/forgot/password").permitAll()
                 .requestMatchers("/master-data/**").permitAll()
                 .requestMatchers("/comments/all").permitAll()
+//                .requestMatchers(request -> {
+//                    if (request.getMethod().equals(HttpMethod.POST.toString())) {
+//                        return new RegexRequestMatcher("/(users|topic|notifications|news|master-data|data...)/filter", null).matches(request);
+//                    }
+//                    return false;
+//                }).permitAll()
                 .requestMatchers(request -> {
                     if (request.getMethod().equals(HttpMethod.POST.toString())) {
-                        return new RegexRequestMatcher("/(users|topic|notifications|news|master-data|data...)/filter", null).matches(request);
+                        return new RegexRequestMatcher("/(users|news|master-data|data...)/filter", null).matches(request);
                     }
                     return false;
                 }).permitAll()
+//                .requestMatchers(request -> {
+//                    if (request.getMethod().equals(HttpMethod.GET.toString())) {
+//                        return new RegexRequestMatcher("/(users|topic|notifications|news|master-data|comments|data...)/(all|\\d+)", null).matches(request);
+//                    }
+//                    return false;
+//                }).permitAll()
+
                 .requestMatchers(request -> {
                     if (request.getMethod().equals(HttpMethod.GET.toString())) {
-                        return new RegexRequestMatcher("/(users|topic|notifications|news|master-data|comments|data...)/(all|\\d+)", null).matches(request);
+                        return new RegexRequestMatcher("/(news|master-data|data...)/(all|\\d+)", null).matches(request);
                     }
                     return false;
-                }).permitAll()
-//                .anyRequest().authenticated();
-                .anyRequest().permitAll();
+                }).permitAll()                .anyRequest().authenticated();
+//                .anyRequest().permitAll();
         return http.build();
     }
 

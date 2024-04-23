@@ -10,4 +10,18 @@ public class TopicTeacherDTO {
     private String nameTopic;
     private UserDTO1 student;
     private UserTeacherDTO teacher;
+    private String status;
+    private String note;
+    private String semester;
+    private String departmentManagement;
+    private String nameInternshipFacility;
+    private String menterInternshipFacility;
+    private String phoneInstructorInternshipFacility;
+    private Float scoresInternshipFacility;
+    private Float instructor;
+    private Float reviewer;
+    private Float boardMembers1;
+    private Float boardMembers2;
+    private Float boardMembers3;
+    private Float result;
 }

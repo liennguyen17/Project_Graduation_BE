@@ -78,4 +78,7 @@ public class Topic {
 
     @OneToMany(mappedBy = "topic")
     private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "topic")
+    private List<TopicChangeName>  TopicChangeNames= new ArrayList<>();
 }

@@ -30,19 +30,19 @@ public class UsersController {
     private final ModelMapper modelMapper;
 
     @PostMapping("")
-//    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGE','TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','TEACHER')")
     public BaseItemResponse<UserDTO> createUser(@Valid @RequestBody CreateUserRequest request){
         return BaseResponse.successData(userService.createUser(request));
     }
 
     @PutMapping
-//    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGE','TEACHER','STUDENT')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','TEACHER','STUDENT')")
     public BaseItemResponse<UserDTO> updateUser(@Valid @RequestBody UpdateUserRequest request){
         return BaseResponse.successData(userService.updateUser(request));
     }
 
     @DeleteMapping()
-//    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public BaseResponse deleteUsers1(@Valid @RequestBody DeleteUsersRequest request) {
         List<ErrorDetail> errorDetailList = userService.deleteUsers(request);
         if (errorDetailList == null) {
@@ -63,6 +63,7 @@ public class UsersController {
     }
 
     @PostMapping("/filter")
+//        @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','TEACHER')")
     public BaseListResponse<UserDTO> filterUser(@Valid @RequestBody GetUserRequest request) {
         Page<User> userPage = userService.getUserByParam(request, PageRequest.of(request.getStart(), request.getLimit()));
         return BaseResponse.successListData(userPage.getContent().stream()
@@ -84,7 +85,7 @@ public class UsersController {
     }
 
     @PostMapping("/change/password")
-    @PreAuthorize("hasAnyAuthority('ADMIN','DEPARTMENT_HEAD','ASSISTANT','TEACHER','STUDENT')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','TEACHER','STUDENT')")
     public BaseResponse changePassword(@RequestBody ChangePasswordRequest request) {
         userService.changePassword(request);
         return BaseResponse.successData("Mật khẩu đã được thay đổi thành công!");
