@@ -72,6 +72,11 @@ public class TopicController {
         return BaseResponse.successData(topicService.studentCreateTopic(request));
     }
 
+    @GetMapping("/student-view-topic")
+    public  BaseItemResponse<TopicDTO> studentViewTopic(){
+        return BaseResponse.successData(topicService.studentViewTopic());
+    }
+
 
     @GetMapping(value = "/generate-pdf" ,produces = MediaType.APPLICATION_PDF_VALUE)
 //    @PreAuthorize("hasAnyAuthority('STUDENT')")

@@ -86,11 +86,13 @@ public class TopicService {
                 topic.setTeacher(teacher);
                 topic.setStudent(currentUser);
                 topic.setSemester(request.getSemester());
-                topic.setStatus("pending");
+                topic.setStatus("Chờ phê duyệt");
                 topic.setDepartmentManagement(request.getDepartmentManagement());
                 topic.setMenterInternshipFacility(request.getMenterInternshipFacility());
                 topic.setNameInternshipFacility(request.getNameInternshipFacility());
                 topic.setPhoneInstructorInternshipFacility(request.getPhoneInstructorInternshipFacility());
+                topic.setCreateAt(new Timestamp(System.currentTimeMillis()));
+                topic.setUpdateAt(new Timestamp(System.currentTimeMillis()));
                 Topic saveTopic = topicRepository.saveAndFlush(topic);
                 return modelMapper.map(saveTopic, TopicDTO1.class);
             } else {
@@ -99,6 +101,27 @@ public class TopicService {
         } else {
             throw new DataNotFoundException("Không tìm thấy thông tin người dùng đang đăng nhập");
         }
+    }
+
+    public TopicDTO studentViewTopic(){
+        Topic userTopic = findTopicFromStudentLogin();
+        if(userTopic == null){
+            throw new DataNotFoundException("Không tìm thấy đề tài của người dùng hiện tại.");
+        }
+
+        TopicDTO topicDTO = modelMapper.map(userTopic, TopicDTO.class);
+        return topicDTO;
+    }
+
+    public Topic findTopicFromStudentLogin(){
+        Optional<User> userOptional = userService.getCurrentUser();
+        if(userOptional.isEmpty()){
+            throw new DataNotFoundException("Không tìm thấy thông tin người dùng hiện tại vui lòng đăng nhập lại.");
+        }
+
+        User currentUser = userOptional.get();
+        Topic userTopic = topicRepository.findByStudent(currentUser);
+        return userTopic;
     }
 
     public ByteArrayInputStream generatePdf(){
@@ -218,7 +241,7 @@ public class TopicService {
         topic.setBoardMembers2(request.getBoardMembers2());
         topic.setBoardMembers3(request.getBoardMembers3());
         topic.setScoresInternshipFacility(request.getScoresInternshipFacility());
-        topic.setCreateAt(new Timestamp(System.currentTimeMillis()));
+//        topic.setCreateAt(new Timestamp(System.currentTimeMillis()));
         topic.setUpdateAt(new Timestamp(System.currentTimeMillis()));
         calculateResult(topic);
         return modelMapper.map(topicRepository.saveAndFlush(topic), TopicDTO.class);

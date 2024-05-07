@@ -40,4 +40,10 @@ public class CommentController {
     public BaseListResponse<CommentUserDTO> listComment(@Valid @RequestBody ListCommentRequest request){
         return BaseResponse.successListData(commentService.listComment(request.getTopicId()), commentService.listComment(request.getTopicId()).size());
     }
+
+    @GetMapping("/teacher")
+    @PreAuthorize("hasAnyAuthority('TEACHER')")
+    public BaseListResponse<CommentDTO> getCommentsForTeacher() {
+        return BaseResponse.successListData(commentService.getCommentForTeacher(), commentService.getCommentForTeacher().size());
+    }
 }

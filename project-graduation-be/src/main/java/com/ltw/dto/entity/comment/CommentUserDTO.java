@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 
 @Data
 public class CommentUserDTO {
+    private Integer id;
     private String message;
     private String createBy;
     private String file;

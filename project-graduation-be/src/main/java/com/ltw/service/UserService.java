@@ -213,6 +213,10 @@ public class UserService {
         if (encoder.matches(request.getNewPassword(), user.getPassword())) {
             throw new DataNotFoundException(Constants.ErrorMessageUserValidation.PASSWORD_DIFFERENT);
         }
+
+        String newPasswordEncoded = encoder.encode(request.getNewPassword());
+        user.setPassword(newPasswordEncoded);
+        usersRepository.saveAndFlush(user);
     }
 
     public static boolean isValidPassword(String password) {

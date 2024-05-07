@@ -21,6 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = usersRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng!"));
         return UserDetailsImpl.builder()
+                .name(user.getName())
                 .userName(user.getUsername())
                 .id(user.getId())
                 .password(user.getPassword())

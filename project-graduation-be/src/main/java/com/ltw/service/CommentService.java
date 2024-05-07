@@ -3,6 +3,7 @@ package com.ltw.service;
 import com.ltw.dto.entity.comment.CommentDTO;
 import com.ltw.dto.entity.comment.CommentUserDTO;
 import com.ltw.dto.request.comment.CreateCommentRequest;
+import com.ltw.dto.request.comment.ListTopicCommentRequest;
 import com.ltw.exception.DataNotFoundException;
 import com.ltw.model.Comment;
 import com.ltw.model.Topic;
@@ -13,8 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service("CommentService")
@@ -63,6 +63,37 @@ public class CommentService {
         return comments.stream().map(comment -> modelMapper.map(comment, CommentUserDTO.class)).collect(Collectors.toList());
 
     }
+
+    public List<CommentDTO> getCommentForTeacher() {
+        Optional<User> currentUserOptional = userService.getCurrentUser();
+        if (currentUserOptional.isPresent()) {
+            User currentUser = currentUserOptional.get();
+            if (currentUser.getRole().equals("TEACHER")) {
+                List<Comment> comments = commentsRepository.findByTopic_Teacher(currentUser);
+                List<CommentDTO> commentDTOS = new ArrayList<>();
+                Set<Integer> displayedTopicIds = new HashSet<>();
+                for (Comment comment : comments) {
+                    Integer topicId = comment.getTopic().getId();
+                    //kt topic id đã được hiện thị chưa
+                    if (!displayedTopicIds.contains(topicId)) {
+                        //them topic id dai dien vao danh sach
+                        displayedTopicIds.add(topicId);
+                        CommentDTO commentDTO = modelMapper.map(comment, CommentDTO.class);
+                        commentDTOS.add(commentDTO);
+                    }
+                }
+                return commentDTOS;
+            } else {
+                throw new DataNotFoundException("Người dùng không phải là giáo viên.");
+            }
+        } else {
+            throw new DataNotFoundException("Không tìm thấy thông tin người dùng đăng nhập.");
+        }
+    }
+
+//    public List<CommentDTO> getCommentByTopicId(ListTopicCommentRequest request){
+//        List<Comment> comments = commentsRepository.si
+//    }
 
 
 }

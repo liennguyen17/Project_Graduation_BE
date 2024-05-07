@@ -13,6 +13,7 @@ public class LoginResponse {
     private String jwt;
     private Integer id;
     private String name;
+//    private String userCode;
     private String username;
     private String phone;
     private String email;
