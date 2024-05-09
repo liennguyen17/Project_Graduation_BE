@@ -28,6 +28,7 @@ public class TopicDTO {
     private Float boardMembers2;
     private Float boardMembers3;
     private Float result;
+    private String success;
     @JsonFormat(pattern = Constants.DateTimeFormatConstant.DATE_FORMAT, timezone = Constants.DateTimeFormatConstant.TIME_ZONE)
     private Timestamp createAt;
     @JsonFormat(pattern = Constants.DateTimeFormatConstant.DATE_FORMAT, timezone = Constants.DateTimeFormatConstant.TIME_ZONE)

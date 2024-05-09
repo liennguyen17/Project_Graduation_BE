@@ -67,6 +67,9 @@ public class Topic {
     @Column(name = "result")
     private Float result;
 
+    @Column(name = "success")
+    private String success;
+
     @Column(name = "note")
     private String note;
 

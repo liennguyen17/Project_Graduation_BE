@@ -24,7 +24,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayInputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -65,6 +67,18 @@ public class TopicController {
     public BaseListResponse<TopicDTO> filterTopic(@Valid @RequestBody GetTopicRequest request) {
         Page<Topic> topicPage = topicService.getTopicByParam(request, PageRequest.of(request.getStart(), request.getLimit()));
         return BaseResponse.successListData(topicPage.getContent().stream().map(e -> modelMapper.map(e, TopicDTO.class)).collect(Collectors.toList()), (int) topicPage.getTotalElements());
+    }
+
+    @PostMapping("/statistics/success")
+    public ResponseEntity<?> getSuccessStatistics(@Valid @RequestBody StatisticsSuccessRequest request) {
+        List<Map<String, Object>> resultList = topicService.getSuccessStatistics(request);
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("error", null);
+        response.put("data", resultList);
+
+        return ResponseEntity.ok(response);
+
     }
 
     @PostMapping("/student")

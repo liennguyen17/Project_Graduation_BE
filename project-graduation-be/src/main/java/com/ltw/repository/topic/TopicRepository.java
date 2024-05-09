@@ -14,4 +14,5 @@ public interface TopicRepository extends JpaRepository<Topic, Integer>, JpaSpeci
     boolean existsByStudentId(Integer id);
     List<Topic> findByTeacher(User user);
     Topic findByStudent(User user);
+    List<Topic> findBySemester(String semester);
 }

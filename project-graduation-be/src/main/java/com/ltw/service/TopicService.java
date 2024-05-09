@@ -7,10 +7,7 @@ import com.ltw.constant.Constants;
 import com.ltw.dto.entity.topic.TopicDTO;
 import com.ltw.dto.entity.topic.TopicDTO1;
 import com.ltw.dto.entity.topic.TopicDeleteDTO;
-import com.ltw.dto.request.topic.CreateTopicRequest;
-import com.ltw.dto.request.topic.DeleteTopicRequest;
-import com.ltw.dto.request.topic.StudentCreateTopicRequest;
-import com.ltw.dto.request.topic.UpdateTopicRequest;
+import com.ltw.dto.request.topic.*;
 import com.ltw.dto.response.ErrorDetail;
 import com.ltw.exception.DataNotFoundException;
 import com.ltw.model.Topic;
@@ -30,9 +27,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service("TopicService")
 @RequiredArgsConstructor
@@ -109,8 +106,7 @@ public class TopicService {
             throw new DataNotFoundException("Không tìm thấy đề tài của người dùng hiện tại.");
         }
 
-        TopicDTO topicDTO = modelMapper.map(userTopic, TopicDTO.class);
-        return topicDTO;
+        return modelMapper.map(userTopic, TopicDTO.class);
     }
 
     public Topic findTopicFromStudentLogin(){
@@ -120,8 +116,8 @@ public class TopicService {
         }
 
         User currentUser = userOptional.get();
-        Topic userTopic = topicRepository.findByStudent(currentUser);
-        return userTopic;
+        return topicRepository.findByStudent(currentUser);
+
     }
 
     public ByteArrayInputStream generatePdf(){
@@ -193,8 +189,6 @@ public class TopicService {
                     footer.add(Chunk.NEWLINE);
                     footer.add(new Phrase("             XÁC NHẬN CỦA                                                  NGƯỜI LÀM ĐƠN", new Font(baseFont, 14, Font.BOLD)));
                     footer.add(Chunk.NEWLINE);
-//                    footer.add(new Phrase("XÁC NHẬN CỦA", new Font(baseFont, 12)));
-//                    footer.add(Chunk.NEWLINE);
                     footer.add(new Phrase("           ĐƠN VỊ THỰC TẬP", new Font(baseFont, 14, Font.BOLD)));
                     footer.add(Chunk.NEWLINE);
                     footer.add(new Phrase("             (Ký tên, đóng dấu)", new Font(baseFont1, 14, Font.BOLD)));
@@ -241,9 +235,9 @@ public class TopicService {
         topic.setBoardMembers2(request.getBoardMembers2());
         topic.setBoardMembers3(request.getBoardMembers3());
         topic.setScoresInternshipFacility(request.getScoresInternshipFacility());
-//        topic.setCreateAt(new Timestamp(System.currentTimeMillis()));
         topic.setUpdateAt(new Timestamp(System.currentTimeMillis()));
         calculateResult(topic);
+        calculateSuccess(topic);
         return modelMapper.map(topicRepository.saveAndFlush(topic), TopicDTO.class);
     }
 
@@ -284,6 +278,27 @@ public class TopicService {
         return topicRepository.findAll(specification, request);
     }
 
+    //statistics
+    public List<Map<String, Object>> getSuccessStatistics(StatisticsSuccessRequest request) {
+        List<Topic> topics = topicRepository.findBySemester(request.getSemester());
+
+        Map<String, Integer> frequencyMap = new HashMap<>();
+        for (Topic topic : topics) {
+            String success = topic.getSuccess();
+            if (success != null && (success.equals("Đỗ tốt nghiệp") || success.equals("Trượt tốt nghiệp") || success.equals("Chưa có kết quả"))) {
+                frequencyMap.put(success, frequencyMap.getOrDefault(success, 0) + 1);
+            }
+        }
+
+        return frequencyMap.entrySet().stream().map(entry -> {
+            Map<String, Object> map = new HashMap<>();
+            map.put("type", entry.getKey());
+            map.put("quantity", entry.getValue());
+            return map;
+        }).collect(Collectors.toList());
+
+    }
+
 
 
     public boolean existsById(Integer topicId) {
@@ -302,6 +317,18 @@ public class TopicService {
             topic.setResult(result);
         }
     }
+
+    public void calculateSuccess(Topic topic) {
+        Float result = topic.getResult();
+        if (result == null) {
+            topic.setSuccess("Chưa có kết quả");
+        } else if (result >= 4.0) {
+            topic.setSuccess("Đỗ tốt nghiệp");
+        } else {
+            topic.setSuccess("Trượt tốt nghiệp");
+        }
+    }
+
 
     public boolean isAllValuesProvidedForCalculation(Topic topic) {
         return topic.getScoresInternshipFacility() != null &&
