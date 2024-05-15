@@ -4,6 +4,7 @@ import com.ltw.constant.ErrorCodeDefs;
 import com.ltw.dto.entity.topic.TopicStudentDTO;
 import com.ltw.dto.entity.topic.TopicTeacherDTO;
 import com.ltw.dto.entity.users.UserDTO;
+import com.ltw.dto.request.topic.StatisticsSuccessRequest;
 import com.ltw.dto.request.user.*;
 import com.ltw.dto.response.BaseItemResponse;
 import com.ltw.dto.response.BaseListResponse;
@@ -16,10 +17,13 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -100,5 +104,29 @@ public class UsersController {
     @GetMapping("/roles/{role}")
     public BaseItemResponse<UserDTO> findUserByRole(@PathVariable String role) {
         return BaseResponse.successData(userService.find_UserByRole(role));
+    }
+
+    @GetMapping("/statistics/student")
+    public ResponseEntity<?> getSuccessStatistics() {
+        List<Map<String, Object>> resultList = userService.countStudentsByBatch();
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("error", null);
+        response.put("data", resultList);
+
+        return ResponseEntity.ok(response);
+
+    }
+
+    @GetMapping("/statistics/student/subject")
+    public ResponseEntity<?> getStudentsBySubject() {
+        List<Map<String, Object>> resultList = userService.getStudentsBySubject();
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("error", null);
+        response.put("data", resultList);
+
+        return ResponseEntity.ok(response);
+
     }
 }

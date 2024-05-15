@@ -14,5 +14,5 @@ import java.util.List;
 public interface CommentsRepository extends JpaRepository<Comment, Integer>, JpaSpecificationExecutor<Comment> {
     List<Comment> findByTopicId(Integer topicId);
     List<Comment> findByTopic_Teacher(User user);
-//    List<Comment> findByTopicId(Integer topicId);
+    List<Comment> findByTopic_Student(User user);
 }

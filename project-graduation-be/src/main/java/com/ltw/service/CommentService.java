@@ -27,10 +27,10 @@ public class CommentService {
 
     public CommentDTO createComment(CreateCommentRequest request) {
 
-        if(!topicService.existsById(request.getTopicId())){
-            throw new DataNotFoundException("Không tìm thấy topic với id là: " +  request.getTopicId());
+        if(!topicService.existsById(request.getTopic())){
+            throw new DataNotFoundException("Không tìm thấy topic với id là: " +  request.getTopic());
         }
-        Topic topic = topicService.findById(request.getTopicId());
+        Topic topic = topicService.findById(request.getTopic());
 
         Optional<User> userOptional = userService.getCurrentUser();
         if(userOptional.isEmpty()){
@@ -38,7 +38,6 @@ public class CommentService {
         }
         User user = userOptional.get();
 
-        //khi nao viet đến đăng nhập thì sẽ thêm lấy thông tin từ login ra để thêm username người đăng nhập vào thành người tạo comment
         try {
             Comment comment = modelMapper.map(request, Comment.class);
             comment.setMessage(request.getMessage());
@@ -85,6 +84,27 @@ public class CommentService {
                 return commentDTOS;
             } else {
                 throw new DataNotFoundException("Người dùng không phải là giáo viên.");
+            }
+        } else {
+            throw new DataNotFoundException("Không tìm thấy thông tin người dùng đăng nhập.");
+        }
+    }
+
+    public List<CommentDTO> getCommentForStudent() {
+        Optional<User> currentUserOptional = userService.getCurrentUser();
+        if (currentUserOptional.isPresent()) {
+            User currentUser = currentUserOptional.get();
+            if (currentUser.getRole().equals("STUDENT")) {
+                List<Comment> comments = commentsRepository.findByTopic_Student(currentUser);
+                List<CommentDTO> commentDTOS = new ArrayList<>();
+                Set<Integer> displayedTopicIds = new HashSet<>();
+                for (Comment comment : comments) {
+                    CommentDTO commentDTO = modelMapper.map(comment, CommentDTO.class);
+                    commentDTOS.add(commentDTO);
+                }
+                return commentDTOS;
+            } else {
+                throw new DataNotFoundException("Người dùng không phải là sinh viên.");
             }
         } else {
             throw new DataNotFoundException("Không tìm thấy thông tin người dùng đăng nhập.");

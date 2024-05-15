@@ -285,7 +285,7 @@ public class TopicService {
         Map<String, Integer> frequencyMap = new HashMap<>();
         for (Topic topic : topics) {
             String success = topic.getSuccess();
-            if (success != null && (success.equals("Đỗ tốt nghiệp") || success.equals("Trượt tốt nghiệp") || success.equals("Chưa có kết quả"))) {
+            if (success != null && (success.equals("Qua KLTN") || success.equals("Trượt KLTN") || success.equals("Trượt (điểm GVHD + GVPB < 5,5)") || success.equals("Chưa có kết quả"))) {
                 frequencyMap.put(success, frequencyMap.getOrDefault(success, 0) + 1);
             }
         }
@@ -309,25 +309,104 @@ public class TopicService {
         return topicRepository.findById(topicId).orElseThrow(() -> new DataNotFoundException("Không tìm thấy topic với id là " + topicId));
     }
 
+//    public void calculateResult(Topic topic) {
+//        if (isAllValuesProvidedForCalculation(topic)) {
+//            float scoresInternshipFacility = topic.getScoresInternshipFacility() >= 8.5 ? 1 : 0;
+//            float boardMembersAvg = (topic.getBoardMembers1() + topic.getBoardMembers2() + topic.getBoardMembers3())/3;
+//            float result = scoresInternshipFacility + ((boardMembersAvg*3) + topic.getInstructor() + topic.getReviewer())/5;
+//            topic.setResult(result);
+//        }
+//    }
+
     public void calculateResult(Topic topic) {
         if (isAllValuesProvidedForCalculation(topic)) {
-            float scoresInternshipFacility = topic.getScoresInternshipFacility() >= 8.5 ? 1 : 0;
-            float boardMembersAvg = (topic.getBoardMembers1() + topic.getBoardMembers2() + topic.getBoardMembers3())/3;
-            float result = scoresInternshipFacility + ((boardMembersAvg*3) + topic.getInstructor() + topic.getReviewer())/5;
-            topic.setResult(result);
+            float instructorScore = topic.getInstructor();
+            float reviewerScore = topic.getReviewer();
+            float boardMember1Score = topic.getBoardMembers1();
+            float boardMember2Score = topic.getBoardMembers2();
+            float boardMember3Score = topic.getBoardMembers3();
+
+            float boardMembersAvg = (boardMember1Score + boardMember2Score + boardMember3Score) / 3;
+            float A = instructorScore + reviewerScore;
+
+            if (A >= 5.5) {
+                float C = instructorScore - boardMembersAvg;
+                float D = reviewerScore - boardMembersAvg;
+
+                boolean keepInstructor = true;
+                boolean keepReviewer = true;
+
+                if (C >= 2) {
+                    keepInstructor = false;
+                }
+                if (D >= 2) {
+                    keepReviewer = false;
+                }
+
+                float sumScores = boardMembersAvg * 3;
+                int count = 3; // Always include the board member scores
+
+                if (keepInstructor) {
+                    sumScores += instructorScore;
+                    count++;
+                }
+                if (keepReviewer) {
+                    sumScores += reviewerScore;
+                    count++;
+                }
+
+                float result = sumScores / count;
+                topic.setResult(result);
+            } else {
+                topic.setSuccess("Trượt (điểm GVHD + GVPB < 5,5)");
+            }
         }
     }
 
+// You will also need to ensure that the following methods exist in the Topic class
+// float getInstructor();
+// float getReviewer();
+// float getBoardMembers1();
+// float getBoardMembers2();
+// float getBoardMembers3();
+// void setResult(float result);
+// void setSuccess(String message);
+
+
+//    public void calculateSuccess(Topic topic) {
+//        Float result = topic.getResult();
+//        if (result == null) {
+//            topic.setSuccess("Chưa có kết quả");
+//        } else if (result >= 4.0) {
+//            topic.setSuccess("Qua KLTN");
+//        } else {
+//            topic.setSuccess("Trượt KLTN");
+//        }
+//    }
+
     public void calculateSuccess(Topic topic) {
         Float result = topic.getResult();
+        float instructorScore = topic.getInstructor();
+        float reviewerScore = topic.getReviewer();
+        float A = instructorScore + reviewerScore;
+
         if (result == null) {
             topic.setSuccess("Chưa có kết quả");
+        } else if (A < 5.5) {
+            topic.setSuccess("Trượt (điểm GVHD + GVPB < 5,5)");
         } else if (result >= 4.0) {
-            topic.setSuccess("Đỗ tốt nghiệp");
+            topic.setSuccess("Qua KLTN");
         } else {
-            topic.setSuccess("Trượt tốt nghiệp");
+            topic.setSuccess("Trượt KLTN");
         }
     }
+
+// You will also need to ensure that the following methods exist in the Topic class
+// float getInstructor();
+// float getReviewer();
+// Float getResult();
+// void setSuccess(String message);
+
 
 
     public boolean isAllValuesProvidedForCalculation(Topic topic) {
@@ -339,6 +418,15 @@ public class TopicService {
                 topic.getBoardMembers3() != null;
 
     }
+
+//    public List<TopicDTO> getTopicForTeacher(){
+//        Optional<User> currentUserOptional = userService.getCurrentUser();
+//        if (currentUserOptional.isPresent()) {
+//            User currentUser = currentUserOptional.get();
+//            if (currentUser.getRole().equals("TEACHER")) {
+//                List<Topic> topics = topicRepository
+//            }
+//    }
 
 
 

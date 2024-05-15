@@ -46,4 +46,10 @@ public class CommentController {
     public BaseListResponse<CommentDTO> getCommentsForTeacher() {
         return BaseResponse.successListData(commentService.getCommentForTeacher(), commentService.getCommentForTeacher().size());
     }
+
+    @GetMapping("/student")
+    @PreAuthorize("hasAnyAuthority('STUDENT')")
+    public BaseListResponse<CommentDTO> getCommentForStudent() {
+        return BaseResponse.successListData(commentService.getCommentForStudent(), commentService.getCommentForStudent().size());
+    }
 }

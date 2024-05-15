@@ -33,10 +33,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @Service("UserService")
 @RequiredArgsConstructor
@@ -353,6 +350,83 @@ public class UserService {
             throw new DataNotFoundException("Không tìm thấy thông tin người dùng đăng nhập.");
         }
     }
+
+
+
+
+    public List<Map<String, Object>> countStudentsByBatch(){
+        List<User> students = usersRepository.findAllByRole("STUDENT");
+
+        Map<String, Integer> batchCountMap = new HashMap<>();
+
+        for(User student : students){
+            String userCode = student.getUserCode();
+            String batch = "Khóa " + userCode.substring(0,2); //lay 2 ky tu dau tien
+            batchCountMap.put(batch, batchCountMap.getOrDefault(batch, 0) + 1);
+        }
+        return convertToResultList(batchCountMap);
+    }
+
+    private List<Map<String, Object>> convertToResultList(Map<String, Integer> batchCountMap) {
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : batchCountMap.entrySet()) {
+            Map<String, Object> item = new HashMap<>();
+            item.put("type", entry.getKey());
+            item.put("value", entry.getValue());
+            result.add(item);
+        }
+        return result;
+    }
+
+
+
+//    public List<Map<String, Object>> getStudentsBySubject() {
+//        List<User> students = usersRepository.findAllByRole("STUDENT");
+//        Map<String, List<User>> studentsBySubject = new HashMap<>();
+//
+//        // Lọc sinh viên theo subject
+//        for (User student : students) {
+//            String subject = student.getSubject();
+//            if (!studentsBySubject.containsKey(subject)) {
+//                studentsBySubject.put(subject, new ArrayList<>());
+//            }
+//            studentsBySubject.get(subject).add(student);
+//        }
+//
+//        // Chuyển đổi thành danh sách dạng List<Map<String, Object>>
+//        List<Map<String, Object>> result = new ArrayList<>();
+//        for (Map.Entry<String, List<User>> entry : studentsBySubject.entrySet()) {
+//            Map<String, Object> subjectInfo = new HashMap<>();
+//            subjectInfo.put("subject", entry.getKey());
+//            subjectInfo.put("students", entry.getValue());
+//            result.add(subjectInfo);
+//        }
+//
+//        return result;
+//    }
+
+    public List<Map<String, Object>> getStudentsBySubject() {
+        List<User> students = usersRepository.findAllByRole("STUDENT");
+        Map<String, Integer> studentCountBySubject = new HashMap<>();
+
+        // Đếm số lượng sinh viên theo subject
+        for (User student : students) {
+            String subject = student.getSubject();
+            studentCountBySubject.put(subject, studentCountBySubject.getOrDefault(subject, 0) + 1);
+        }
+
+        // Chuyển đổi thành danh sách dạng List<Map<String, Object>>
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : studentCountBySubject.entrySet()) {
+            Map<String, Object> subjectInfo = new HashMap<>();
+            subjectInfo.put("subject", entry.getKey());
+            subjectInfo.put("students", entry.getValue());
+            result.add(subjectInfo);
+        }
+
+        return result;
+    }
+
 
 
     public static String generateVerificationCode() {
