@@ -1,5 +1,7 @@
 package com.ltw.model;
 
+import com.ltw.domain.validator.UserValidator;
+import com.ltw.importFileExcel.ExcelData;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -79,6 +81,16 @@ public class User {
             authorities.add(new SimpleGrantedAuthority(role));
         }
         return authorities;
+    }
+
+    public List<ExcelData.ErrorDetail> validateInformationDetailError(List<ExcelData.ErrorDetail> errorDetailList){
+        if(!UserValidator.validateName(name)){
+            errorDetailList.add(ExcelData.ErrorDetail.builder().columnIndex(0).errMsg("Họ và tên không hợp lệ!").build());
+        }
+        if(!UserValidator.validateUsername(username)){
+            errorDetailList.add(ExcelData.ErrorDetail.builder().columnIndex(6).errMsg("Tên đăng nhập không hợp lệ!").build());
+        }
+        return errorDetailList;
     }
 
 }

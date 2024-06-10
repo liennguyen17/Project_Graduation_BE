@@ -24,4 +24,5 @@ public class TopicTeacherDTO {
     private Float boardMembers2;
     private Float boardMembers3;
     private Float result;
+    private String success;
 }

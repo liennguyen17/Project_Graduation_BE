@@ -1,5 +1,7 @@
 package com.ltw.domain.validator.email;
 
+import com.ltw.domain.validator.username.UsernameValidator;
+import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
 import java.lang.annotation.Documented;
@@ -13,6 +15,7 @@ import static java.lang.annotation.ElementType.*;
 //@Target({ElementType.FIELD, ElementType.METHOD,ElementType.PARAMETER})
 @Target({TYPE, FIELD, ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
+@Constraint(validatedBy = EmailValidator.class)
 public @interface EmailAnnotation {
     String message() default "Email không đúng định dang!";
 

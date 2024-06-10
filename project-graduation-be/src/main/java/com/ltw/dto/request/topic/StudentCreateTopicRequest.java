@@ -1,5 +1,6 @@
 package com.ltw.dto.request.topic;
 
+import com.ltw.domain.validator.phone.PhoneNumber;
 import lombok.Data;
 
 @Data
@@ -11,5 +12,6 @@ public class StudentCreateTopicRequest {
     private String departmentManagement;
     private String nameInternshipFacility;
     private String menterInternshipFacility;
+    @PhoneNumber
     private String phoneInstructorInternshipFacility;
 }

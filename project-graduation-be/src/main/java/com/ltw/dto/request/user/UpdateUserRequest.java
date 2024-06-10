@@ -25,17 +25,17 @@ public class UpdateUserRequest {
     @Size(min = 6, max = 100, message = Constants.ErrorMessageUserValidation.USERNAME_SIZE)
     @UsernameAnnotation
     private String username;
-    @NotBlank(message = Constants.ErrorMessageUserValidation.DOB_NOT_BLANK)
+//    @NotBlank(message = Constants.ErrorMessageUserValidation.DOB_NOT_BLANK)
     @DateAnnotation
     private String dob;
-    @NotBlank(message = Constants.ErrorMessageUserValidation.ADDRESS_NOT_BLANK)
+//    @NotBlank(message = Constants.ErrorMessageUserValidation.ADDRESS_NOT_BLANK)
     private String address;
     @NotBlank(message = Constants.ErrorMessageUserValidation.EMAIL_NOT_BLANK)
     @EmailAnnotation
     private String email;
-    @NotBlank(message = Constants.ErrorMessageUserValidation.PHONE_NOT_BLANK)
+//    @NotBlank(message = Constants.ErrorMessageUserValidation.PHONE_NOT_BLANK)
     private String phone;
-    @NotBlank(message = Constants.ErrorMessageUserValidation.SUBJECT_NOT_BLANK)
+//    @NotBlank(message = Constants.ErrorMessageUserValidation.SUBJECT_NOT_BLANK)
     private String subject;
     //    @NotNull(message = Constants.ErrorMessageUserValidation.ROLE_NOT_BLANK)
     private Integer roleId;

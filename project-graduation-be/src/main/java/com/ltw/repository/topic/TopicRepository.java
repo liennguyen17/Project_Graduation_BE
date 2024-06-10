@@ -15,4 +15,8 @@ public interface TopicRepository extends JpaRepository<Topic, Integer>, JpaSpeci
     List<Topic> findByTeacher(User user);
     Topic findByStudent(User user);
     List<Topic> findBySemester(String semester);
+
+    boolean existsByStudentIdAndSemester(Integer studentId, String semester);
+
+    List<Topic> findTopicByStudentOrderByCreateAtDesc(User user);
 }

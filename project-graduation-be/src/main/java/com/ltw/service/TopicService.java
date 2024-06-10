@@ -73,9 +73,12 @@ public class TopicService {
         if (userOptional.isPresent()) {
             User currentUser = userOptional.get();
             if (currentUser.getRole().equals("STUDENT")) {
-                if (hasStudentSubmittedTopic(currentUser.getId())) {
-                    throw new DataNotFoundException("Đơn đăng ký đề tài chỉ được gửi một lần, bạn đã gửi đơn đăng ký không thể gửi tiếp");
-
+//                if (hasStudentSubmittedTopic(currentUser.getId())) {
+//                    throw new DataNotFoundException("Đơn đăng ký đề tài chỉ được gửi một lần, bạn đã gửi đơn đăng ký không thể gửi tiếp");
+//
+//                }
+                if(hasStudentSubmittedTopicForSemester(currentUser.getId(), request.getSemester())){
+                    throw new DataNotFoundException("Đơn đăng ký đề tài chỉ được gửi một lần trong mỗi kỳ, bạn đã gửi đơn đăng ký cho kỳ này.");
                 }
                 Topic topic = modelMapper.map(request, Topic.class);
                 User teacher = userService.findTeacher(request.getTeacher());
@@ -116,8 +119,14 @@ public class TopicService {
         }
 
         User currentUser = userOptional.get();
-        return topicRepository.findByStudent(currentUser);
+        List<Topic> topics = topicRepository.findTopicByStudentOrderByCreateAtDesc(currentUser);
 
+        if(topics.isEmpty()){
+            throw new DataNotFoundException("Không tìm thấy đơn đăng ký của sinh viên để trả về kết quá.");
+        }
+        return topics.get(0);
+//        return topicRepository.findByStudent(currentUser);
+//        return topicRepository.findTopicByStudentOrderByCreateAtDesc(currentUser);
     }
 
     public ByteArrayInputStream generatePdf(){
@@ -427,6 +436,10 @@ public class TopicService {
 //                List<Topic> topics = topicRepository
 //            }
 //    }
+
+    private boolean hasStudentSubmittedTopicForSemester(Integer studentId, String semester){
+        return topicRepository.existsByStudentIdAndSemester(studentId, semester);
+    }
 
 
 
